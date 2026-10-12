@@ -1,7 +1,7 @@
 ---
 title: "Eleven winters, ten Diwalis: separating weather, farm fires and fireworks in India's PM2.5, 2016–2026"
 author: "Krishnav Agarwal · Independent researcher"
-date: "Preprint · 12 October 2026 · https://github.com/OWNER/eleven-winters"
+date: "Preprint · 13 October 2026 · https://github.com/krishnav1412/eleven-winters"
 keywords: [PM2.5, Diwali, crop residue burning, weather normalisation, VIIRS, data censoring, exploratory data analysis, India]
 bibliography: refs.bib
 link-citations: true
@@ -161,6 +161,6 @@ Separating weather, farm smoke and fireworks with public data and open code is f
 
 # Data and code availability
 
-All code, derived tables, figures and the locked forecast are at https://github.com/OWNER/eleven-winters. The companion website, including a city explorer for the 103 sites with weather-normalised series, is at https://OWNER.github.io/eleven-winters/. Raw data are public: OpenAQ, NASA FIRMS and ERA5 via Open-Meteo. One command (`ew all`) rebuilds every result from the raw data.
+All code, derived tables, figures and the locked forecast are at https://github.com/krishnav1412/eleven-winters. The companion website, including a city explorer for the 103 sites with weather-normalised series, is at https://krishnav1412.github.io/eleven-winters/. Raw data are public: OpenAQ, NASA FIRMS and ERA5 via Open-Meteo. One command (`ew all`) rebuilds every result from the raw data.
 
 # References

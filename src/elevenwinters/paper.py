@@ -18,8 +18,8 @@ from jinja2 import Environment, FileSystemLoader
 from elevenwinters import config, report
 
 PAPER = config.ROOT / "paper"
-REPO_URL = os.environ.get("EW_REPO_URL", "https://github.com/OWNER/eleven-winters")
-SITE_URL = os.environ.get("EW_SITE_URL", "https://OWNER.github.io/eleven-winters/")
+REPO_URL = os.environ.get("EW_REPO_URL", "https://github.com/krishnav1412/eleven-winters")
+SITE_URL = os.environ.get("EW_SITE_URL", "https://krishnav1412.github.io/eleven-winters/")
 AFFILIATION = os.environ.get("EW_AFFILIATION", "Independent researcher")
 
 BROWSERS = [

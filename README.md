@@ -4,7 +4,7 @@
 An open, reproducible exploratory data analysis with a paper, a companion website and a
 pre-registered forecast for Diwali 2026.
 
-- Website: https://OWNER.github.io/eleven-winters/
+- Website: https://krishnav1412.github.io/eleven-winters/
 - Paper (PDF): [`paper/eleven-winters.pdf`](paper/eleven-winters.pdf) · LaTeX for submission: [`paper/paper.tex`](paper/paper.tex)
 - Locked forecast: [`prereg/`](prereg/)
 
@@ -40,7 +40,7 @@ mission monitors cover that period.
 Requires Python 3.11+.
 
 ```bash
-git clone https://github.com/OWNER/eleven-winters
+git clone https://github.com/krishnav1412/eleven-winters
 cd eleven-winters
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
