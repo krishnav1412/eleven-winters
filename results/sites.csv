@@ -1,0 +1,106 @@
+site,city,state,region,network,name,lat,lon,n_locations
+adarshnagar_rspcb,Jaipur,Rajasthan,rest,cpcb,"Adarsh Nagar, Jaipur - RSPCB",26.90291,75.83686,1
+anandvihar_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"Anand Vihar, New Delhi - DPCC",28.647093333333334,77.31595666666666,3
+ardhalibazar_uppcb,Varanasi,Uttar Pradesh,igp,cpcb,"Ardhali Bazar, Varanasi - UPPCB",25.3506,82.90831,1
+ashokvihar_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"Ashok Vihar, Delhi - DPCC",28.69555,77.181475,2
+ayanagar_imd,Gurugram,Haryana,delhi_ncr,cpcb,"Aya Nagar, New Delhi - IMD",28.47426,77.13161,1
+bapujinagar_kspcb,Bengaluru,Karnataka,rest,cpcb,"Bapuji Nagar, Bengaluru - KSPCB",12.95191,77.53978,1
+bhelupur_uppcb,Varanasi,Uttar Pradesh,igp,cpcb,"Bhelupur, Varanasi - UPPCB",25.30178,82.99679,1
+btmlayout_cpcb,Bengaluru,Karnataka,rest,cpcb,"BTM Layout, Bengaluru - CPCB",12.91352,77.59508,1
+centralschool_cpcb,Lucknow,Uttar Pradesh,igp,cpcb,"Central School, Lucknow - CPCB",26.8821,80.93028,2
+centraluniversity_tspcb,Hyderabad,Telangana,rest,cpcb,"Central University, Hyderabad - TSPCB",17.4601,78.33436,1
+chhatrapatishivajiintlairportt2_mpcb,Mumbai,Maharashtra,rest,cpcb,"Chhatrapati Shivaji Intl. Airport (T2), Mumbai - MPCB",19.10078,72.87462,1
+civilline_ppcb,Jalandhar,Punjab,source,cpcb,"Civil Line, Jalandhar - PPCB",31.32191,75.57891,1
+crrimathuraroad_imd,Delhi,Delhi,delhi_ncr,cpcb,"CRRI Mathura Road, New Delhi - IMD",28.5512,77.27357,1
+dharmapuri_uppcb,Agra,Uttar Pradesh,igp,cpcb,"Dharmapuri, Agra - UPPCB",27.16934,78.03582,1
+drkarnisinghshootingrange_dpcc,Faridabad,Haryana,delhi_ncr,cpcb,"Dr. Karni Singh Shooting Range, Delhi - DPCC",28.49915,77.264875,2
+fblock_hspcb,Sirsa,Haryana,source,cpcb,"F-Block, Sirsa - HSPCB",29.5364,75.0158,1
+fortwilliam_wbpcb,Kolkata,West Bengal,igp,cpcb,"Fort William, Kolkata - WBPCB",22.55664,88.34267,1
+ftikidwainagar_uppcb,Kanpur,Uttar Pradesh,igp,cpcb,"FTI Kidwai Nagar, Kanpur - UPPCB",26.42828,80.32707,1
+ghusuri_wbpcb,Kolkata,West Bengal,igp,cpcb,"Ghusuri, Howrah - WBPCB",22.61197,88.34742,1
+gobindpura_hspcb,Yamuna Nagar,Haryana,source,cpcb,"Gobind Pura, Yamuna Nagar - HSPCB",30.14806,77.28935,1
+goldentemple_ppcb,Amritsar,Punjab,source,cpcb,"Golden Temple, Amritsar - PPCB",31.62,74.87651,1
+gomtinagar_uppcb,Lucknow,Uttar Pradesh,igp,cpcb,"Gomti Nagar, Lucknow - UPPCB",26.86812,81.00512,1
+gvmcorporation_appcb,Visakhapatnam,Andhra Pradesh,rest,cpcb,"GVM Corporation, Visakhapatnam - APPCB",17.72268,83.3082,1
+gyaspur_iitm,Ahmedabad,Gujarat,rest,cpcb,"Gyaspur, Ahmedabad - IITM",22.97713,72.55302,1
+hardevnagar_ppcb,Bathinda,Punjab,source,cpcb,"Hardev Nagar, Bathinda - PPCB",30.23301,74.90776,1
+hombegowdanagar_kspcb,Bengaluru,Karnataka,rest,cpcb,"Hombegowda Nagar, Bengaluru - KSPCB",12.93854,77.5901,1
+hudasector_hspcb,Fatehabad,Haryana,source,cpcb,"Huda Sector, Fatehabad - HSPCB",29.50366,75.46793,1
+igscplanetariumcomplex_bspcb,Patna,Bihar,igp,cpcb,"IGSC Planetarium Complex, Patna - BSPCB",25.5941,85.1376,1
+ihbas_cpcb,Delhi,Delhi,delhi_ncr,cpcb,"IHBAS, Delhi - CPCB",28.681635,77.30376000000001,2
+indirapuram_uppcb,Ghaziabad,Uttar Pradesh,delhi_ncr,cpcb,"Indirapuram, Ghaziabad - UPPCB",28.64623,77.35807,1
+ito_cpcb,Delhi,Delhi,delhi_ncr,cpcb,"ITO, New Delhi - CPCB",28.62862,77.24106,2
+jawaharlalnehrustadium_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"Jawaharlal Nehru Stadium, Delhi - DPCC",28.581564999999998,77.23300499999999,2
+jayanagar5thblock_kspcb,Bengaluru,Karnataka,rest,cpcb,"Jayanagar 5th Block, Bengaluru - KSPCB",12.92098,77.58491,1
+kalalmajra_ppcb,Khanna,Punjab,source,cpcb,"Kalal Majra, Khanna - PPCB",30.73606,76.20969,1
+kariavattom,Thiruvananthapuram,Kerala,rest,cpcb,"Kariavattom, Thiruvananthapuram - Kerala PCB",8.5637,76.8865,1
+karveroadpune_mpcb,Pune,Maharashtra,rest,cpcb,"Karve Road Pune, Pune - MPCB",18.50117,73.81655,1
+knowledgeparkv_uppcb,Noida,Uttar Pradesh,delhi_ncr,cpcb,"Knowledge Park - V, Greater Noida - UPPCB",28.55705,77.45366,1
+kurla_mpcb,Mumbai,Maharashtra,rest,cpcb,"Kurla, Mumbai - MPCB",19.0863,72.8888,1
+lalbagh_cpcb,Lucknow,Uttar Pradesh,igp,cpcb,"Lalbagh, Lucknow - CPCB",26.84588,80.93655,1
+lodhiroad_imd,Delhi,Delhi,delhi_ncr,cpcb,"Lodhi Road, New Delhi - IMD",28.59182,77.22731,1
+majordhyanchandnationalstadium_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"Major Dhyan Chand National Stadium, Delhi - DPCC",28.611890000000002,77.23647,2
+maldahiya_uppcb,Varanasi,Uttar Pradesh,igp,cpcb,"Maldahiya, Varanasi - UPPCB",25.32393,82.99687,1
+manali_cpcb,Chennai,Tamil Nadu,rest,cpcb,"Manali, Chennai - CPCB",13.16454,80.26285,1
+manalivillage_tnpcb,Chennai,Tamil Nadu,rest,cpcb,"Manali Village, Chennai - TNPCB",13.1662,80.2584,1
+mandirmarg_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"Mandir Marg, Delhi - DPCC",28.635933333333337,77.20071,3
+maninagar_gpcb,Ahmedabad,Gujarat,rest,cpcb,"Maninagar, Ahmedabad - GPCB",23.00266,72.59191,1
+mhadacolony_iitm,Pune,Maharashtra,rest,cpcb,"Mhada Colony, Pune - IITM",18.57304,73.92772,1
+modeltown_ppcb,Patiala,Punjab,source,cpcb,"Model Town, Patiala - PPCB",30.34939,76.36664,1
+muradpur_bspcb,Patna,Bihar,igp,cpcb,"Muradpur, Patna - BSPCB",25.61965,85.14738,1
+nathucolony_hspcb,Faridabad,Haryana,delhi_ncr,cpcb,"Nathu Colony, Ballabgarh - HSPCB",28.34192,77.3197,1
+nehrunagar_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"Nehru Nagar, Delhi - DPCC",28.56592,77.25465,2
+nehrunagar_uppcb,Kanpur,Uttar Pradesh,igp,cpcb,"Nehru Nagar, Kanpur - UPPCB",26.47031,80.32299,1
+northcampus_imd,Delhi,Delhi,delhi_ncr,cpcb,"North Campus, DU, Delhi - IMD",28.65738,77.15854,1
+nsikalyanpur_uppcb,Kanpur,Uttar Pradesh,igp,cpcb,"NSI Kalyanpur, Kanpur - UPPCB",26.50995,80.24961,1
+okhlaphase2_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"Okhla Phase-2, Delhi - DPCC",28.533715,77.268855,2
+padmapukur_wbpcb,Kolkata,West Bengal,igp,cpcb,"Padmapukur, Howrah - WBPCB",22.56873,88.27973,1
+patparganj_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"Patparganj, Delhi - DPCC",28.6274,77.285915,2
+pattimehar_hspcb,Ambala,Haryana,source,cpcb,"Patti Mehar, Ambala - HSPCB",30.37959,76.77833,1
+phase4gidc_gpcb,Ahmedabad,Gujarat,rest,cpcb,"Phase-4 GIDC, Vatva - GPCB",22.96961,72.6435,1
+pimpleshwarmandir_mpcb,Mumbai,Maharashtra,rest,cpcb,"Pimpleshwar Mandir, Thane - MPCB",19.19206,72.95852,2
+plammoodu,Thiruvananthapuram,Kerala,rest,cpcb,"Plammoodu, Thiruvananthapuram - Kerala PCB",8.51491,76.94359,1
+policecommissionerate_rspcb,Jaipur,Rajasthan,rest,cpcb,"Police Commissionerate, Jaipur - RSPCB",26.91641,75.79949,1
+policelines_hspcb,Jind,Haryana,source,cpcb,"Police Lines, Jind - HSPCB",29.30781,76.33762,1
+punjabagriculturaluniversity_ppcb,Ludhiana,Punjab,source,cpcb,"Punjab Agricultural University, Ludhiana - PPCB",30.9028,75.8086,1
+punjabibagh_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"Punjabi Bagh, Delhi - DPCC",28.671726666666668,77.13072000000001,3
+pusa_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"Pusa, Delhi - DPCC",28.63965,77.14626,1
+rajbansinagar_bspcb,Patna,Bihar,igp,cpcb,"Rajbansi Nagar, Patna - BSPCB",25.59949,85.11367,1
+ratanpura,Rupnagar,Punjab,source,cpcb,"Ratanpura, Rupnagar - Ambuja Cements",31.03255,76.5623,1
+revenuecolonyshivajinagar_iitm,Pune,Maharashtra,rest,cpcb,"Revenue Colony-Shivajinagar, Pune - IITM",18.53008,73.8496,1
+rimtuniversity_ppcb,Mandi Gobindgarh,Punjab,source,cpcb,"RIMT University, Mandi Gobindgarh - PPCB",30.64996,76.33144,1
+rishinagar_hspcb,Kaithal,Haryana,source,cpcb,"Rishi Nagar, Kaithal - HSPCB",29.8006,76.4155,2
+rkpuram_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"R K Puram, Delhi - DPCC",28.56371,77.18029666666668,3
+royapuram_tnpcb,Chennai,Tamil Nadu,rest,cpcb,"Royapuram, Chennai - TNPCB",13.1036,80.2909,1
+samanpura_bspcb,Patna,Bihar,igp,cpcb,"Samanpura, Patna - BSPCB",25.59673,85.08562,1
+sanathnagar_tspcb,Hyderabad,Telangana,rest,cpcb,"Sanathnagar, Hyderabad - TSPCB",17.439625,78.45396,2
+sanjaynagar_uppcb,Ghaziabad,Uttar Pradesh,delhi_ncr,cpcb,"Sanjay Nagar, Ghaziabad - UPPCB",28.68538,77.45384,1
+sanjaypalace_uppcb,Agra,Uttar Pradesh,igp,cpcb,"Sanjay Palace, Agra - UPPCB",27.19866,78.00598,1
+sector116_uppcb,Noida,Uttar Pradesh,delhi_ncr,cpcb,"Sector-116, Noida - UPPCB",28.56923,77.39385,1
+sector125_uppcb,Noida,Uttar Pradesh,delhi_ncr,cpcb,"Sector - 125, Noida, UP - UPPCB",28.54476,77.32313,1
+sector12_hspcb,Karnal,Haryana,source,cpcb,"Sector-12, Karnal - HSPCB",29.6953,77.0027,1
+sector16a_hspcb,Delhi,Delhi,delhi_ncr,cpcb,"Sector16A, Faridabad - HSPCB",28.409480000000002,77.311845,2
+sector18_hspcb,Panipat,Haryana,source,cpcb,"Sector-18, Panipat - HSPCB",29.43559,76.97553,1
+sector25,Chandigarh,Chandigarh,source,cpcb,"Sector-25, Chandigarh - CPCC",30.75146,76.76288,1
+sector3bavasvikascolony_uppcb,Agra,Uttar Pradesh,igp,cpcb,"Sector-3B Avas Vikas Colony, Agra - UPPCB",27.19412,77.96237,1
+sector51_hspcb,Gurugram,Haryana,delhi_ncr,cpcb,"Sector-51, Gurugram - HSPCB",28.4227,77.0667,1
+sector6_hspcb,Chandigarh,Chandigarh,source,cpcb,"Sector-6, Panchkula - HSPCB",30.70578,76.85318,1
+sector7_hspcb,Kurukshetra,Haryana,source,cpcb,"Sector-7, Kurukshetra - HSPCB",29.96694,76.87588,1
+shadipur_cpcb,Delhi,Delhi,delhi_ncr,cpcb,"Shadipur, Delhi - CPCB",28.65159,77.152705,2
+shastrinagar_rspcb,Jaipur,Rajasthan,rest,cpcb,"Shastri Nagar, Jaipur - RSPCB",26.95029,75.73094,1
+sion_mpcb,Mumbai,Maharashtra,rest,cpcb,"Sion, Mumbai - MPCB",19.047,72.8746,1
+sirifort_cpcb,Delhi,Delhi,delhi_ncr,cpcb,"Sirifort, Delhi - CPCB",28.55042,77.21594,1
+sriaurobindomarg_dpcc,Delhi,Delhi,delhi_ncr,cpcb,"Sri Aurobindo Marg, Delhi - DPCC",28.53135,77.19016,1
+talkatoradistrictindustriescenter_cpcb,Lucknow,Uttar Pradesh,igp,cpcb,"Talkatora District Industries Center, Lucknow - CPCB",26.834,80.89174,1
+urbanestateii_hspcb,Hisar,Haryana,source,cpcb,"Urban Estate-II, Hisar - HSPCB",29.14056,75.74494,1
+us_chennai,Chennai,Tamil Nadu,rest,us_mission,US Diplomatic Post: Chennai,13.070105,80.26520500000001,2
+us_delhi,Delhi,Delhi,delhi_ncr,us_mission,US Diplomatic Post: New Delhi,28.61693,77.20676,2
+us_hyderabad,Hyderabad,Telangana,rest,us_mission,US Diplomatic Post: Hyderabad,17.413755000000002,78.465625,2
+us_kolkata,Kolkata,West Bengal,igp,us_mission,US Diplomatic Post: Kolkata,22.554885,88.357045,2
+us_mumbai,Mumbai,Maharashtra,rest,us_mission,Mumbai,19.07283,72.88261,1
+vasundhara_uppcb,Ghaziabad,Uttar Pradesh,delhi_ncr,cpcb,"Vasundhara, Ghaziabad - UPPCB",28.66033,77.35726,1
+velacheryresarea_cpcb,Chennai,Tamil Nadu,rest,cpcb,"Velachery Res. Area, Chennai - CPCB",13.00522,80.23981,1
+victoria_wbpcb,Kolkata,West Bengal,igp,cpcb,"Victoria, Kolkata - WBPCB",22.54481,88.34037,1
+vikassadan_hspcb,Gurugram,Haryana,delhi_ncr,cpcb,"Vikas Sadan, Gurugram - HSPCB",28.45012,77.02631,1
+vileparlewest_mpcb,Mumbai,Maharashtra,rest,cpcb,"Vile Parle West, Mumbai - MPCB",19.10861,72.83622,1
+zoopark_tspcb,Hyderabad,Telangana,rest,cpcb,"Zoo Park, Hyderabad - TSPCB",17.34969,78.45144,1

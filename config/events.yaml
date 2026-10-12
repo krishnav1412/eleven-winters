@@ -1,0 +1,60 @@
+# Event and policy calendar. Every row names its source so it can be checked.
+# "verified: false" rows are compiled from news coverage of court orders and still
+# need checking against the order text before the journal submission.
+
+diwali:
+  # Lakshmi Puja (main Diwali night), as observed in Delhi
+  - {year: 2016, date: "2016-10-30"}
+  - {year: 2017, date: "2017-10-19"}
+  - {year: 2018, date: "2018-11-07"}
+  - {year: 2019, date: "2019-10-27"}
+  - {year: 2020, date: "2020-11-14"}
+  - {year: 2021, date: "2021-11-04"}
+  - {year: 2022, date: "2022-10-24"}
+  - {year: 2023, date: "2023-11-12"}
+  - {year: 2024, date: "2024-10-31"}
+  - {year: 2025, date: "2025-10-20"}
+  - {year: 2026, date: "2026-11-08"}
+
+# Firecracker rules in force in Delhi-NCR on Diwali night.
+# regime codes used in the analysis:
+#   permissive    crackers widely available and burst (no ban, or a sale-only suspension)
+#   green_window  only certified "green" crackers, inside fixed hours
+#   full_ban      sale and bursting banned
+cracker_rules_delhi:
+  - {year: 2016, regime: permissive,   detail: "No restriction in force on Diwali (licences suspended by the Supreme Court on 11 Nov 2016, after the festival)", source: "Arjun Gopal v. Union of India, SC order 11 Nov 2016", verified: false}
+  - {year: 2017, regime: permissive,   detail: "Sale suspended in Delhi-NCR; bursting of existing stock not prohibited", source: "Arjun Gopal v. Union of India, SC order 9 Oct 2017", verified: false}
+  - {year: 2018, regime: green_window, detail: "Only improved or green crackers, 8-10 pm on Diwali", source: "Arjun Gopal v. Union of India, SC order 23 Oct 2018", verified: false}
+  - {year: 2019, regime: green_window, detail: "Green crackers only (CSIR-NEERI), 8-10 pm", source: "SC order 23 Oct 2018 continued", verified: false}
+  - {year: 2020, regime: full_ban,     detail: "Sale and use banned in NCR, 9-30 Nov 2020", source: "NGT order 9 Nov 2020 (OA 249/2020)", verified: false}
+  - {year: 2021, regime: full_ban,     detail: "Complete ban on sale and bursting in Delhi", source: "DPCC order Sep 2021", verified: false}
+  - {year: 2022, regime: full_ban,     detail: "Complete ban on sale and bursting in Delhi until 1 Jan 2023", source: "DPCC order Sep 2022", verified: false}
+  - {year: 2023, regime: full_ban,     detail: "Complete ban on sale and bursting in Delhi", source: "DPCC order Sep 2023", verified: false}
+  - {year: 2024, regime: full_ban,     detail: "Complete ban on sale and bursting in Delhi until 1 Jan 2025", source: "DPCC order 14 Oct 2024", verified: false}
+  - {year: 2025, regime: green_window, detail: "Green crackers allowed 18-21 Oct; bursting 6-7 am and 8-10 pm", source: "Supreme Court order 15 Oct 2025 (reported by Deccan Herald, 2025)", verified: false}
+  - {year: 2026, regime: unknown,      detail: "Not announced when the forecast was locked", source: "", verified: true}
+
+# Tamil Nadu sets its own two-hour windows for Deepavali, including early morning.
+# Used only as a timing contrast for Chennai in H3.
+tamil_nadu_note: "Deepavali crackers are customarily burst at dawn on Naraka Chaturdashi; the state has permitted morning and evening two-hour windows since 2018."
+
+lockdown_2020:
+  source: "Ministry of Home Affairs orders under the Disaster Management Act, 2020"
+  phases:
+    - {phase: "Lockdown 1", start: "2020-03-25", end: "2020-04-14"}
+    - {phase: "Lockdown 2", start: "2020-04-15", end: "2020-05-03"}
+    - {phase: "Lockdown 3", start: "2020-05-04", end: "2020-05-17"}
+    - {phase: "Lockdown 4", start: "2020-05-18", end: "2020-05-31"}
+
+# Reported Punjab season totals (active-fire events, official counts)
+punjab_fire_counts_official:
+  - {season: 2023, events: 36663, source: "PTI, from PPCB/PRSC data"}
+  - {season: 2024, events: 10909, source: "PTI, from PPCB/PRSC data"}
+  - {season: 2025, events: 5114,  source: "Government press release, Nov 2025"}
+
+# Analysis windows (month-day, inclusive)
+windows:
+  harvest: {start: "10-10", end: "11-30"}        # paddy-residue burning season
+  pre_harvest: {start: "09-10", end: "09-30"}    # reference window before harvest
+  post_harvest: {start: "12-05", end: "12-31"}   # reference window after harvest
+  diwali_night_hours: [18, 19, 20, 21, 22, 23, 0, 1, 2]   # evening of Diwali to 2 am next day

@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "elevenwinters"
+version = "0.1.0"
+description = "Separating weather, farm fires and fireworks in India's PM2.5, 2015-2026"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Krishnav Agarwal" }]
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "pyarrow>=15",
+  "requests>=2.31",
+  "pyyaml>=6",
+  "python-dotenv>=1.0",
+  "tqdm>=4.66",
+  "scipy>=1.12",
+  "scikit-learn>=1.4",
+  "lightgbm>=4.3",
+  "statsmodels>=0.14",
+  "ruptures>=1.1.9",
+  "altair>=5.3",
+  "vl-convert-python>=1.4",
+  "jinja2>=3.1",
+  "pypandoc_binary>=1.13",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.4"]
+
+[project.scripts]
+ew = "elevenwinters.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

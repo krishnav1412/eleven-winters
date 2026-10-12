@@ -1,0 +1,40 @@
+/* Print stylesheet for the preprint PDF (rendered by a headless browser). */
+@page { size: A4; margin: 22mm 20mm 22mm 20mm; }
+html { font-size: 10.6pt; }
+body {
+  font-family: "Source Serif 4", "Iowan Old Style", Georgia, serif; font-optical-sizing: auto;
+  line-height: 1.5; color: #1B1F1D; max-width: none; margin: 0; padding: 0; background: #fff;
+  hyphens: auto; text-align: justify;
+}
+header#title-block-header { text-align: left; margin-bottom: 1.6em; border-bottom: 1px solid #CBD1CB; padding-bottom: 1.2em; }
+h1.title {
+  font-family: "Archivo", "Arial Narrow", Arial, sans-serif; font-stretch: 80%; font-weight: 750;
+  font-size: 23pt; line-height: 1.08; margin: 0 0 0.5em; text-align: left; hyphens: none;
+}
+p.author { font-family: "IBM Plex Mono", monospace; font-size: 9pt; letter-spacing: 0.03em; margin: 0.2em 0; text-align: left; }
+p.date { font-family: "IBM Plex Mono", monospace; font-size: 8.5pt; color: #59605C; margin: 0.2em 0 1em; text-align: left; }
+.abstract { font-size: 9.8pt; margin: 1em 0 0; }
+.abstract-title { font-family: "IBM Plex Mono", monospace; font-size: 8.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: #59605C; font-weight: 500; text-align: left; margin-bottom: 0.3em; }
+.keywords { font-size: 9pt; color: #59605C; }
+h1 {
+  font-family: "Archivo", "Arial Narrow", Arial, sans-serif; font-stretch: 85%; font-weight: 700;
+  font-size: 13.5pt; margin: 1.5em 0 0.5em; break-after: avoid; text-align: left;
+}
+h2 {
+  font-family: "Archivo", "Arial Narrow", Arial, sans-serif; font-stretch: 90%; font-weight: 650;
+  font-size: 11.2pt; margin: 1.2em 0 0.4em; break-after: avoid; text-align: left;
+}
+p { margin: 0 0 0.65em; orphans: 3; widows: 3; }
+figure { margin: 1em 0 1.2em; break-inside: avoid; }
+figure img { width: 100%; height: auto; display: block; }
+figcaption { font-size: 8.8pt; line-height: 1.4; color: #3F4441; margin-top: 0.45em; text-align: left; }
+table { border-collapse: collapse; font-size: 9pt; margin: 0.8em 0; width: 100%; break-inside: avoid; }
+th { font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.05em; color: #59605C; border-bottom: 1px solid #1B1F1D; padding: 4px 8px 4px 0; text-align: left; }
+td { border-bottom: 1px solid #CBD1CB; padding: 4px 8px 4px 0; }
+caption { caption-side: bottom; font-size: 8.8pt; color: #3F4441; text-align: left; padding-top: 0.4em; }
+code { font-family: "IBM Plex Mono", monospace; font-size: 0.85em; }
+a { color: inherit; text-decoration: none; }
+ol, ul { padding-left: 1.4em; margin: 0 0 0.7em; }
+li { margin-bottom: 0.25em; }
+#refs { font-size: 8.8pt; line-height: 1.4; text-align: left; }
+#refs .csl-entry { margin-bottom: 0.4em; padding-left: 1.6em; text-indent: -1.6em; }

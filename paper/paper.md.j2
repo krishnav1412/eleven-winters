@@ -1,0 +1,162 @@
+---
+title: "Eleven winters, ten Diwalis: separating weather, farm fires and fireworks in India's PM2.5, 2016–2026"
+author:
+  - name: Krishnav Agarwal
+    affiliation: "{{ affiliation }}"
+date: "{{ build_date }}"
+keywords: [PM2.5, Diwali, crop residue burning, weather normalisation, VIIRS, data censoring, exploratory data analysis, India]
+bibliography: refs.bib
+link-citations: true
+abstract: |
+  Delhi's winter air is usually blamed on three things that arrive together: stagnant weather, smoke from paddy-residue fires in Punjab and Haryana, and Diwali fireworks. We separate them in an exploratory analysis of hourly data from {{ n.n_sites }} monitoring sites in {{ n.n_cities }} Indian cities ({{ n.period_start[:4] }}–{{ n.period_end[:4] }}), NASA VIIRS fire detections and ERA5 weather. Gradient-boosted models remove the effect of weather and, for Delhi, of farm-fire smoke carried by the wind; what remains on Diwali night is the festival's own contribution. Diwali's lunar date moved between 19 October and 14 November over the decade, and Delhi's firecracker rules changed four times, which lets us compare like with like. Three findings stand out. First, the reference monitor at the US Embassy stops reporting during the worst hours of Diwali night: {{ n.cens_diwali|fmt(0, pct=True) }} of late-night Diwali hours are missing, against {{ n.cens_ordinary|fmt(0, pct=True) }} on ordinary autumn nights, so averages built on it understate the festival. Second, using the less-censored CPCB network median, Diwali night adds {{ n.diwali_main_min|fmt }}–{{ n.diwali_main_max|fmt }} µg/m³ above the weather-and-fire baseline in every year observed, {{ n.diwali_above_p99 }} of {{ n.diwali_main_n }} nights beyond the 99th percentile of ordinary nights, and years with a full ban were not lower than years with green crackers. Third, VIIRS detections in Punjab and Haryana fell {{ n.viirs_drop_2021_2025|fmt(0, pct=True) }} between 2021 and 2025, but the share caught by the 1:30 am pass rose from {{ n.night_share_2016_2021|fmt(1, pct=True) }} to {{ n.night_share_2025|fmt(1, pct=True) }}, and each detected fire now goes with a larger rise in Delhi's weather-adjusted PM2.5, consistent with burning that has moved out of the satellite's view. We publish a locked, checksummed forecast for Diwali 2026 and release all code, derived data and an interactive companion site.
+---
+
+# Introduction
+
+Every October and November, PM2.5 in Delhi climbs to many times the Indian 24-hour standard of 60 µg/m³. Three explanations dominate public debate. The first is meteorology: as the monsoon withdraws, the boundary layer becomes shallow, winds slacken and pollution builds up. The second is the burning of paddy residue in Punjab and Haryana, whose smoke north-westerly winds carry towards Delhi. The third is Diwali, which in most years falls inside the same weeks and brings a night of fireworks.
+
+Because the three arrive together, a high reading in early November cannot be pinned on any one of them by looking at it. Earlier work has addressed parts of the problem. Weather-normalisation with machine learning [@grange2018] has been applied to Delhi [@verma2025] and to India's National Clean Air Programme cities [@hei_ncap]. The best-known causal estimate of the Diwali effect used an event-study design for 2013–2017 but did not separate firecracker smoke from crop smoke [@ghei2018]. On the farm-fire side, recent studies report that burning in Punjab now happens later in the afternoon, after the polar-orbiting satellites have passed [@nasaeo2025; @iforest2025; @biswal2025], and that Delhi's PM2.5 has become only weakly coupled to official fire counts [@mangaraj2025].
+
+This study uses three things that change from year to year to pull the causes apart (Fig. 1). Diwali follows the lunar calendar, so its date moves across the burning season: in some years it comes before the main burning, in others in the middle of it. Delhi's firecracker rules changed from no effective restriction (2016–2017) to green crackers in fixed hours (2018–2019), a full ban (2020–2024) and back to green crackers in 2025 [@dh2025]. And the timing of crop burning itself appears to have shifted.
+
+Our contributions are:
+
+1. A weather-and-fire baseline for Delhi's hourly PM2.5, against which each Diwali night is compared with {{ n.diwali_placebo_n|fmt }} ordinary autumn nights scored the same way.
+2. Evidence that the reference monitor most often used for Delhi goes dark at the peak of Diwali night, and a censoring-aware way to measure the festival.
+3. A satellite-internal signature of the shift in burning time: a rise in the share of fires caught by VIIRS's night pass, which needs no other satellite.
+4. A season-by-season estimate of how strongly Delhi's PM2.5 tracks upwind fire detections.
+5. A pre-registered forecast for Diwali 2026, and an open, one-command pipeline that rebuilds every number, figure and the companion website.
+
+![{{ figs.fig01_design.caption }}](figures/fig01_design.png){width=100%}
+
+# Data
+
+## Air-quality monitors
+
+Hourly concentrations of PM2.5, PM10, NO₂, SO₂ and CO come from the public OpenAQ archive [@openaq], which republishes the Central Pollution Control Board (CPCB) continuous monitoring network and the US Department of State's embassy and consulate monitors. We matched monitors to {{ n.n_cities }} study cities by distance and kept the longest-running sites in each, giving {{ n.n_sites_cpcb }} CPCB-network sites and {{ n.n_sites_us }} US-mission sites ({{ n.n_locations }} archive locations, since the same physical monitor often appears under two identifiers after a change of data feed). The archive timestamps mark the end of each averaging period; we label each hour by its start.
+
+The archive has a gap that matters for this study: CPCB-network data are absent from late 2022 to early 2025 (Fig. 2). The US-mission monitors, which use reference beta-attenuation instruments, run almost without interruption, so the US Embassy in New Delhi provides the only continuous decade-long record for Delhi.
+
+Quality control removed {{ n.pm25_flagged_share|fmt(1, pct=True) }} of {{ n.pm25_hours|fmt }} site-hours of PM2.5: values at or below zero or at the instrument ceiling, runs of six or more identical readings, single-hour spikes far above both neighbours, PM2.5 above PM10, and a pattern we call a stall, in which a high reading is repeated for one or two hours just before the record goes blank. Multi-hour events such as Diwali nights are deliberately not removed.
+
+![{{ figs.fig02_coverage.caption }}](figures/fig02_coverage.png){width=100%}
+
+## Fire detections
+
+Active-fire detections come from NASA FIRMS [@firms]: VIIRS on Suomi-NPP at 375 m [@schroeder2014], which crosses India at about 1:30 pm and 1:30 am local time, and MODIS [@giglio2016]. We keep detections classified as presumed vegetation fires, assign them to Punjab or Haryana with state boundaries from geoBoundaries [@geoboundaries], and, as a robustness check, drop 0.02° grid cells that light up in four or more months outside the two crop-burning seasons (likely kilns, flares and other fixed heat sources). VIIRS detections in Punjab and Haryana in October–November track the official Punjab season counts closely in the three years for which we have both.
+
+## Weather
+
+Hourly temperature, humidity, precipitation, surface pressure, 10 m wind, cloud cover, solar radiation and boundary-layer height for each city come from the ERA5 reanalysis [@hersbach2020] through the Open-Meteo archive API [@zippenfenig2023].
+
+# Methods
+
+## Weather normalisation
+
+For each site with at least 500 valid days we fit a LightGBM model [@ke2017] of daily log PM2.5 on daily weather summaries and calendar terms (a linear time trend, day of year and day of week). Following @grange2018, the weather-normalised value for each day is the average of 200 predictions in which the weather columns are replaced by draws from the site's whole record while the calendar terms are kept. Predictions are back-transformed with Duan's smearing factor [@duan1983]. Model skill comes from five-fold cross-validation in which whole calendar years are held out together. To compare winter with the monsoon, we compute the winter (November–January) minus monsoon (July–September) gap in the observed and the normalised series; the share of the observed gap that disappears after normalisation is the share attributable to weather. For Delhi we test for trend in the deseasonalised normalised monthly series with the Theil–Sen estimator [@sen1968] and Kendall's test, and search for change points with PELT [@killick2012].
+
+## The Diwali baseline
+
+For Delhi and four other cities we fit an hourly business-as-usual (BAU) model of log PM2.5 on weather, rolling 6- and 24-hour summaries of wind, boundary-layer height and rain, calendar terms and, for northern cities, a wind-aware fire index (below) with lags of 0–3 days. Diwali windows (three days either side) are never used for training, and every hour is predicted out of fold, with whole ISO weeks held out together, so that Diwali nights and ordinary nights are judged by the same standard. The out-of-fold R² on log PM2.5 for ordinary hours is {{ n.r2_hourly_us_delhi|fmt(2) }} for the US Embassy and {{ n.r2_hourly_cpcb_delhi|fmt(2) }} for the CPCB network median.
+
+The Diwali-night excess is the mean of observed minus BAU from 6 pm on Diwali to 3 am the next morning. Because monitors often go missing during the worst hours (Section 4.1), we fill missing hours inside the window with the last valid reading. This is a rough lower bound, since the monitors fail while concentrations are rising. Our main receptor is the median across CPCB Delhi sites in hours with at least three reporting, which is far less affected by single-monitor failures; the US Embassy series is used as a cross-check. As a reference distribution we apply the same calculation to every ordinary night between 1 October and 15 December, excluding the days around Dussehra, Chhath and Gurpurab.
+
+For the fingerprint we compare 6 pm to midnight on Diwali with the same hours on the five nights a week earlier at each CPCB Delhi site, for the PM2.5/PM10 ratio, SO₂, CO and NO₂, using Wilcoxon signed-rank tests.
+
+## Wind-aware fire index and coupling
+
+For each day the fire index adds up VIIRS detections in Punjab and Haryana, each weighted by max(0, cos θ), where θ is the angle between the bearing from Delhi to the fire and the direction the wind is blowing from, and by exp(−d/300 km), where d is the distance to Delhi. The transport wind is the daily vector-mean 10 m wind at Delhi, Panipat, Patiala and Ludhiana, along the Punjab–Delhi corridor. To find how long smoke takes to arrive, we correlate the index at lags of 0–5 days with the daily log-residual of a weather-only model of Delhi's PM2.5 (US Embassy), after removing each season's mean. For coupling, we regress the same residual on the index averaged over the strongest lags, separately for each season (10 October–30 November, Diwali excluded), with Newey–West standard errors [@newey1987].
+
+## Ground test of a shift in burning time
+
+If burning has moved into the evening, the evening share of PM2.5 at monitors inside Punjab and Haryana should rise during the harvest. For each site and season we compute the ratio of mean PM2.5 at 6 pm–midnight to that at 10 am–4 pm, during 15 October–30 November and during 5–31 December of the same year, and compare the ratio of the two between seasons.
+
+## Pre-registered forecast
+
+Before Diwali 2026 (8 November) we lock a forecast of the CPCB-network Diwali-night excess for each possible firecracker regime: the mean of past Diwalis under the same rules, with an 80% prediction interval from the variance pooled across regimes. The record is committed to the public repository with its SHA-256 checksum.
+
+# Results
+
+## The monitor that goes dark
+
+At the US Embassy, {{ n.cens_diwali|fmt(0, pct=True) }} of the hours between 10 pm and 3 am on Diwali nights have no valid reading, against {{ n.cens_ordinary|fmt(0, pct=True) }} on ordinary autumn nights, about {{ n.cens_ratio|fmt(0) }} times as often (Fig. 8). Gaps occurred on {{ n.cens_nights }} of {{ n.cens_n }} Diwali nights, usually one to three hours after the evening rise began and often after the instrument repeated its last reading. The CPCB network median, which combines many monitors, lost {{ n.cens_network|fmt(0, pct=True) }} of the same hours. Any Diwali estimate built from the Embassy record alone therefore leaves out the peak.
+
+![{{ figs.fig08_censoring.caption }}](figures/fig08_censoring.png){width=100%}
+
+## Weather and the winter gap
+
+{% if n.gap_n_sites %}Across {{ n.gap_n_cities }} cities, weather accounts for a median of {{ n.gap_weather_share_median_north|fmt(0, pct=True) }} of the winter-minus-monsoon gap in cities on the Indo-Gangetic Plain and {{ n.gap_weather_share_median_rest|fmt(0, pct=True) }} elsewhere (Fig. 4). Removing weather shrinks the observed north–south difference in winter PM2.5 from {{ n.gap_ns_gap_obs|fmt }} to {{ n.gap_ns_gap_norm|fmt }} µg/m³, so about {{ n.gap_ns_gap_weather_share|fmt(0, pct=True) }} of that difference is weather and the rest is emissions.{% endif %} Fig. 3 shows Delhi's decade at the US Embassy. {% if n.trend_pct_per_year is defined %}The weather-normalised series falls by {{ n.trend_pct_per_year|fmt(1) }}% a year (Theil–Sen; Kendall p = {{ n.trend_p|fmt(3) }}). {% if n.trend_post2020_vs_2019_pct is not none %}Mean normalised PM2.5 in 2021–2025 was {{ n.trend_post2020_vs_2019_pct|fmt(0, sign=True) }}% relative to 2019.{% endif %}{% endif %}
+
+![{{ figs.fig03_tape.caption }}](figures/fig03_tape.png){width=100%}
+
+![{{ figs.fig04_gap.caption }}](figures/fig04_gap.png){width=100%}
+
+![{{ figs.fig05_trend.caption }}](figures/fig05_trend.png){width=100%}
+
+## Diwali
+
+In every year with data, Diwali night rises far above the weather-and-fire baseline (Fig. 6). In the CPCB network median the excess ranged from {{ n.diwali_main_min|fmt }} to {{ n.diwali_main_max|fmt }} µg/m³ (mean {{ n.diwali_main_mean|fmt }}), against a 99th percentile of {{ n.diwali_placebo_p99|fmt }} µg/m³ across {{ n.diwali_placebo_n|fmt }} ordinary nights; {{ n.diwali_above_p99 }} of {{ n.diwali_main_n }} Diwali nights exceeded it (Fig. 7).
+
+The firecracker rules made no visible difference. The mean excess was {{ n.diwali_permissive_mean|fmt }} µg/m³ in years with no effective restriction ({{ n.diwali_permissive_years|join(", ") }}), {{ n.diwali_green_window_mean|fmt }} µg/m³ in green-cracker years ({{ n.diwali_green_window_years|join(", ") }}) and {{ n.diwali_full_ban_mean|fmt }} µg/m³ in full-ban years with data ({{ n.diwali_full_ban_years|join(", ") }}){% if n.diwali_kruskal_p is not none %} (Kruskal–Wallis p = {{ n.diwali_kruskal_p|fmt(2) }}){% endif %}. The samples are small, but nothing suggests the bans shrank the spike. The largest excess in the record came in 2025, the first year green crackers were allowed again, which was also the year with the fewest farm fires.
+
+Including the fire index in the baseline changed the US Embassy Diwali excess by a median of {{ n.fire_term_median_change|fmt(0) }} µg/m³, and after it is included the excess is no longer related to the fire exposure on Diwali night (Spearman ρ = {{ n.diwali_fire_rho_fire|fmt(2) }}, p = {{ n.diwali_fire_p_fire|fmt(2) }}, n = {{ n.cens_n }}). The festival's contribution is therefore not farm smoke being misattributed.
+
+{% if n.fp and n.fp.ratio %}The Diwali evening carries a combustion fingerprint at CPCB Delhi sites (Fig. 10): the PM2.5/PM10 ratio rose in {{ n.fp.ratio.share_higher|fmt(0, pct=True) }} of {{ n.fp.ratio.n }} site-years (median {{ n.fp.ratio.median_ref|fmt(2) }} → {{ n.fp.ratio.median_diwali|fmt(2) }}, p = {{ n.fp.ratio.wilcoxon_p|fmt(3) }}){% if n.fp.so2 %}, SO₂ rose in {{ n.fp.so2.share_higher|fmt(0, pct=True) }} (median change {{ n.fp.so2.median_pct_change|fmt(0, sign=True) }}%, p = {{ n.fp.so2.wilcoxon_p|fmt(3) }}){% endif %}{% if n.fp.co %}, and CO rose in {{ n.fp.co.share_higher|fmt(0, pct=True) }}{% endif %}{% if n.fp.no2 %}, while NO₂, mostly from traffic, changed by a median of {{ n.fp.no2.median_pct_change|fmt(0, sign=True) }}%{% endif %}.{% endif %} The timing differs between cities (Fig. 9): the excess in Delhi builds from early evening to after midnight, while Chennai, where Deepavali is traditionally celebrated at dawn, shows a morning component.
+
+![{{ figs.fig06_event.caption }}](figures/fig06_event.png){width=100%}
+
+![{{ figs.fig07_nights.caption }}](figures/fig07_nights.png){width=100%}
+
+![{{ figs.fig09_cities.caption }}](figures/fig09_cities.png){width=100%}
+
+![{{ figs.fig10_fingerprint.caption }}](figures/fig10_fingerprint.png){width=100%}
+
+## The fire-count paradox
+
+VIIRS detections in Punjab and Haryana during October–November peaked at {{ n.viirs_peak|fmt }} in {{ n.viirs_peak_season }} and fell to {{ n.viirs_2025|fmt }} in 2025, {{ n.viirs_drop_2021_2025|fmt(0, pct=True) }} below 2021 (Fig. 11). The night pass tells a different story. Before 2024 the 1:30 am pass caught {{ n.night_share_2016_2021|fmt(1, pct=True) }} of detections on average; in 2024 it caught {{ n.night_share_2024|fmt(1, pct=True) }} and in 2025 {{ n.night_share_2025|fmt(1, pct=True) }}. In Punjab, night-pass detections reached {{ n.night_punjab[2024] }} in 2024 and {{ n.night_punjab[2025] }} in 2025, against at most {{ n.night_punjab_2016_2023_max }} in any season from 2016 to 2023, even though daytime detections fell by more than 90%. The rise survives removal of fixed heat sources. A satellite that only looks twice a day cannot show when fires start, but more fires still burning at 1:30 am is what a shift of ignition into the evening would produce, and it agrees with geostationary evidence reported elsewhere [@iforest2025; @nasaeo2025].
+
+Delhi's weather-adjusted PM2.5 responds to the fire index over one to four days rather than on a single day (strongest correlation at lag {{ n.best_lag }}; Spearman ρ between {{ n.lag_rho[1]|fmt(2) }} and {{ n.lag_rho[4]|fmt(2) }} for lags of one to four days). Per unit of the index, the response was small and stable in 2016–2021 (mean {{ n.coupling_early|fmt(1) }}% per 100 index units) and much larger in 2025 ({{ n.coupling_2025|fmt(0) }}%, 95% CI {{ n.coupling_2025_lo|fmt(0) }} to {{ n.coupling_2025_hi|fmt(0) }}%; Fig. 12). Each detected fire now stands for more smoke, which is what an undercount would produce. This offers a second explanation for the weak coupling between counts and Delhi's air reported by @mangaraj2025.
+
+{% if n.evening %}The ground test at {{ n.evening.n_early + n.evening.n_late }} site-seasons in Punjab and Haryana does not show the shift (Fig. 13): the harvest-to-December evening ratio had a median of {{ n.evening.early_median|fmt(2) }} before 2022 and {{ n.evening.late_median|fmt(2) }} in {{ n.evening.late_seasons|join(", ") }} (one-sided Mann–Whitney p = {{ n.evening.mannwhitney_p_late_greater|fmt(2) }}). With the archive gap, the later period rests on few seasons, and 2025 had so little burning that a change in its timing would barely move urban monitors.{% else %}The ground test at Punjab and Haryana monitors could not be completed: the archive gap leaves too few later seasons with both harvest and December data (Fig. 13).{% endif %}
+
+![{{ figs.fig11_fires.caption }}](figures/fig11_fires.png){width=100%}
+
+![{{ figs.fig12_coupling.caption }}](figures/fig12_coupling.png){width=100%}
+
+![{{ figs.fig13_evening.caption }}](figures/fig13_evening.png){width=100%}
+
+## A forecast for Diwali 2026
+
+{% if n.forecast %}Table 1 gives the locked forecast. The record was committed on {{ n.forecast.locked_at_utc[:10] }} with SHA-256 checksum `{{ n.forecast_sha[:16] }}…`.
+
+| Firecracker rules in 2026 | Forecast excess (µg/m³) | 80% interval | Past Diwalis used |
+|---|---:|---:|---|
+{% for key, label in [("full_ban", "Full ban"), ("green_window", "Green crackers, fixed hours"), ("permissive", "No effective restriction")] %}{% set s = n.forecast.scenarios.get(key) %}{% if s %}| {{ label }} | {{ s.point|fmt }} | {{ s.interval_80[0]|fmt }} to {{ s.interval_80[1]|fmt }} | {{ s.based_on_years|join(", ") }} |
+{% endif %}{% endfor %}
+
+: Locked forecast of the Diwali-night excess in the CPCB Delhi network median, 8 November 2026.
+
+![{{ figs.fig14_forecast.caption }}](figures/fig14_forecast.png){width=100%}
+{% endif %}
+
+# Discussion
+
+**Fire counts are losing their meaning as a target.** Official progress on stubble burning is reported in active-fire counts. Our results add two lines of evidence that these counts now understate burning: the night pass of the same satellite sees a growing share of fires, and each detected fire goes with a larger rise in Delhi's PM2.5. Reported declines of 80–90% in counts should not be read as declines of the same size in burning or in its effect on Delhi. Burnt-area mapping and geostationary sensors, which do not depend on a single overpass time, are better suited to tracking progress.
+
+**The firecracker bans did not shrink Diwali night.** Across ten years, the weather- and fire-adjusted Diwali excess was no lower under a full ban than with green crackers or no effective restriction. This matches the Supreme Court's own observation in 2025 that air quality differed little between green-cracker and full-ban years [@dh2025], and points to enforcement rather than the wording of the rules.
+
+**Monitoring fails when it matters most.** The monitor most widely used as Delhi's reference stops reporting during the hours of highest concentration on Diwali night. Studies and dashboards that average whatever hours survive will understate the festival. Reporting the number of missing hours alongside any Diwali figure, and using the network median rather than a single monitor, are simple remedies.
+
+# Limitations
+
+The CPCB archive gap from late 2022 to early 2025 removes three Diwalis and three burning seasons from the network record; for these years we rely on the US Embassy monitor, which is censored on Diwali night. The regime comparison rests on two to five Diwalis per regime and is descriptive. The fire index uses surface winds, while smoke travels at higher levels. Rural Punjab has few monitors, so the ground test uses urban ones, where local sources dominate the evening. Weather normalisation removes the effect of weather on average; it cannot remove every interaction between weather and emissions. Diwali dates and firecracker rules are compiled from secondary reports and should be checked against the original orders.
+
+# Conclusions
+
+Separating weather, farm smoke and fireworks with public data and open code is feasible, and the separation changes the story. Diwali adds a large, consistent excess that the firecracker bans have not reduced. The fall in fire counts overstates the fall in burning. And the reference monitor goes dark at the peak. We will score our Diwali 2026 forecast in public after the festival.
+
+# Data and code availability
+
+All code, derived tables, figures and the locked forecast are at {{ repo_url }}. The companion website, including a city explorer for all {{ n.n_sites }} sites, is at {{ site_url }}. Raw data are public: OpenAQ, NASA FIRMS and ERA5 via Open-Meteo. One command (`ew all`) rebuilds every result from the raw data.
+
+# References

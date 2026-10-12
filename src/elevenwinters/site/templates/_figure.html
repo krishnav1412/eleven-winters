@@ -1,0 +1,9 @@
+{% macro figure(name, figs, summary) -%}
+{% set f = figs[name] %}
+<figure class="wide" id="{{ name }}">
+  <div class="fig-head"><span class="n">Fig. {{ f.n }}</span><h3>{{ f.title }}</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="{{ name }}" role="img" aria-label="{{ f.title }}"></div></div>
+  <p class="sr-summary">{{ summary }}</p>
+  <figcaption>{{ f.caption }}<span class="src">Source: {{ f.source }}</span></figcaption>
+</figure>
+{%- endmacro %}
