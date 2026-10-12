@@ -100,5 +100,18 @@
     }
   },
   "coupling_mean_2016_2021": 2.5830361947410503,
-  "coupling_mean_2022_on": 7.371430120548043
+  "coupling_mean_2022_on": 7.371430120548043,
+  "evening_ratio": {
+    "early_median": 1.1895893812179565,
+    "late_median": 1.1221033334732056,
+    "n_early": 14,
+    "n_late": 17,
+    "late_seasons": [
+      2025
+    ],
+    "mannwhitney_p_late_greater": 0.950252795997478,
+    "paired_sites": 11,
+    "paired_share_higher": 0.2727272727272727,
+    "paired_wilcoxon_p": 0.92626953125
+  }
 }

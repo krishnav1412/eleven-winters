@@ -131,6 +131,7 @@ def fig_tape(mode: str):
         color=alt.Color("cat:N", title="Daily PM2.5 (µg/m³) by National AQI category",
                         scale=alt.Scale(domain=[b[2] for b in NAQI], range=SOOT),
                         legend=alt.Legend(orient="top", symbolType="circle", symbolSize=120, symbolStrokeColor="#A3A69F",
+                                          titleLimit=600, labelLimit=200,
                                           symbolStrokeWidth=0.5,
                                           labelExpr="{'Good':'0–30 Good','Satisfactory':'31–60','Moderate':'61–90','Poor':'91–120','Very poor':'121–250','Severe':'250+ Severe'}[datum.label]")),
         tooltip=[alt.Tooltip("date:T", format="%d %b %Y"), alt.Tooltip("pm25:Q", format=".0f", title="PM2.5")],
@@ -200,9 +201,11 @@ def fig_event(mode: str):
     reg = regimes()
     c["regime"] = c["year"].map(reg)
     c = c[c["regime"].isin(REGIME_ORDER)]
+    has = c.groupby("year")["excess"].transform(lambda s: s.notna().sum() >= 12)
+    c = c[has].copy()
     c["regime_label"] = c["regime"].map(REGIME_LABEL)
     c["year_s"] = c["year"].astype(str)
-    peak = c.loc[c.groupby("year")["excess"].idxmax()].dropna(subset=["excess"])
+    peak = c.loc[c.dropna(subset=["excess"]).groupby("year")["excess"].idxmax()]
     base = alt.Chart(c)
     zero = alt.Chart(pd.DataFrame({"y": [0]})).mark_rule(color=p["rule"]).encode(y="y:Q")
     night = alt.Chart(pd.DataFrame({"a": [0], "b": [9]})).mark_rect(color=p["band"]).encode(x="a:Q", x2="b:Q")
@@ -229,8 +232,8 @@ def fig_nights(mode: str):
     pld = pl[(pl["site"] == "cpcb_delhi") & (pl["model"] == "fire")]
     lo, hi = pld["night_excess_lb"].quantile([0.05, 0.95])
     band = alt.Chart(pd.DataFrame({"lo": [lo], "hi": [hi]})).mark_rect(color=p["band"]).encode(y="lo:Q", y2="hi:Q")
-    band_t = alt.Chart(pd.DataFrame({"y": [hi], "t": ["90% of ordinary Oct–Dec nights"]})).mark_text(
-        align="left", x=4, dy=-6, color=p["muted"], fontSize=10.5).encode(y="y:Q", text="t")
+    band_t = alt.Chart(pd.DataFrame({"y": [lo], "t": ["Band: 90% of ordinary Oct–Dec nights"]})).mark_text(
+        align="right", x=W - 4, dy=-6, color=p["muted"], fontSize=10.5).encode(y="y:Q", text="t")
     zero = alt.Chart(pd.DataFrame({"y": [0]})).mark_rule(color=p["rule"]).encode(y="y:Q")
     t["regime_label"] = t["regime"].map(REGIME_LABEL)
     t["year_s"] = t["year"].astype(str)
@@ -261,6 +264,10 @@ def fig_censoring(mode: str):
         for day in pd.date_range(f"{year}-10-01", f"{year}-12-15", freq="D"):
             diwali = day == d
             if not diwali and d - pd.Timedelta(days=22) <= day <= d + pd.Timedelta(days=16):
+                continue
+            # same population as the analysis: nights where the monitor was running that evening
+            evening = [day + pd.Timedelta(hours=h) for h in range(18, 22)]
+            if sum(pd.notna(obs.get(ts, np.nan)) for ts in evening) < 3:
                 continue
             for k in range(0, 14):   # 17:00 to 06:00
                 ts = day + pd.Timedelta(hours=17 + k)
@@ -293,16 +300,23 @@ def fig_cities(mode: str):
     prof = prof.dropna(subset=["city"])
     ticks = list(range(-24, 49, 6))
     lbl = "{" + ",".join(f"'{t}':'{['00','06','12','18'][(t % 24)//6]}:00'" for t in ticks) + "}[datum.value]"
-    day_rules = alt.Chart(pd.DataFrame({"h": [0, 24]})).mark_rule(color=p["rule"], strokeDash=[2, 3]).encode(x="h:Q")
-    area = alt.Chart(prof).mark_area(opacity=0.9, interpolate="monotone").encode(
-        x=alt.X("h:Q", title="Clock time; dotted lines mark midnight before and after Diwali day",
-                scale=alt.Scale(domain=[-24, 48], nice=False), axis=alt.Axis(values=ticks, labelExpr=lbl)),
-        y=alt.Y("excess:Q", title="Median excess, µg/m³"),
-        color=alt.value(p["marigold"]))
-    zero = alt.Chart(pd.DataFrame({"y": [0]})).mark_rule(color=p["rule"]).encode(y="y:Q")
-    return alt.layer(day_rules, zero, area, data=prof).properties(width=W, height=70).facet(
-        row=alt.Row("city:N", sort=order, title=None, header=alt.Header(labelAngle=0, labelAlign="left", labelOrient="top")),
-    ).resolve_scale(y="independent")
+    panels = []
+    for i, city in enumerate(order):
+        d = prof[prof["city"] == city].sort_values("h")
+        last = i == len(order) - 1
+        x = alt.X("h:Q", title="Clock time; dotted lines mark the midnights before and after Diwali day" if last else None,
+                  scale=alt.Scale(domain=[-24, 48], nice=False),
+                  axis=alt.Axis(values=ticks, labelExpr=lbl, labels=last, ticks=last))
+        day_rules = alt.Chart(pd.DataFrame({"h": [0, 24]})).mark_rule(color=p["faint"], strokeDash=[2, 3]).encode(x=x)
+        zero = alt.Chart(pd.DataFrame({"y": [0]})).mark_rule(color=p["rule"]).encode(y="y:Q")
+        area = alt.Chart(d).mark_area(opacity=0.35, color=p["marigold"]).encode(
+            x=x, y=alt.Y("excess:Q", title=None, axis=alt.Axis(tickCount=3)))
+        line = alt.Chart(d).mark_line(color=p["marigold"], strokeWidth=1.8).encode(
+            x=x, y="excess:Q", tooltip=[alt.Tooltip("h:Q", title="hours from 00:00 on Diwali"),
+                                        alt.Tooltip("excess:Q", format=".0f", title="median excess")])
+        panels.append(alt.layer(area, line, zero, day_rules).properties(
+            width=W, height=64, title=alt.TitleParams(city, fontSize=12.5, fontWeight=600, color=p["ink"], anchor="start")))
+    return alt.vconcat(*panels, spacing=10).resolve_scale(y="independent")
 
 
 def fig_fingerprint(mode: str):
@@ -317,11 +331,11 @@ def fig_fingerprint(mode: str):
             continue
         sub = fp[["site", "year", a, b]].dropna()
         for _, r in sub.iterrows():
-            rows += [{"panel": label, "id": f"{r.site}{r.year}", "when": "Reference nights", "value": r[b]},
-                     {"panel": label, "id": f"{r.site}{r.year}", "when": "Diwali night", "value": r[a]}]
+            rows += [{"panel": label, "id": f"{r.site}{r.year}", "when": "Week before", "value": r[b]},
+                     {"panel": label, "id": f"{r.site}{r.year}", "when": "Diwali", "value": r[a]}]
     df = pd.DataFrame(rows)
     med = df.groupby(["panel", "when"])["value"].median().reset_index()
-    x = alt.X("when:N", sort=["Reference nights", "Diwali night"], title=None,
+    x = alt.X("when:N", sort=["Week before", "Diwali"], title=None, scale=alt.Scale(padding=0.3),
               axis=alt.Axis(labelAngle=0, labelFont=FONT_LABEL, labelColor=p["ink"]))
     return alt.hconcat(*[
         alt.layer(
@@ -349,7 +363,7 @@ def fig_fires(mode: str):
     lbl = alt.Chart(v).mark_text(dy=-6, font=FONT_NUM, fontSize=9.5, color=p["muted"]).encode(
         x=x, y="day:Q", text=alt.Text("day:Q", format=".2~s"))
     offp = alt.Chart(off).mark_point(shape="diamond", size=60, filled=True, color=p["ink"]).encode(
-        x="season:O", y="events:Q", tooltip=["season", alt.Tooltip("events:Q", format=","), "source"])
+        x="season:O", xOffset=alt.value(20), y="events:Q", tooltip=["season", alt.Tooltip("events:Q", format=","), "source"])
     left = (bars + lbl + offp).properties(width=W // 2 - 20, height=250)
     line = alt.Chart(v).mark_line(color=p["ember"], strokeWidth=2.2, point=alt.OverlayMarkDef(filled=True, size=46, color=p["ember"])).encode(
         x=x, y=alt.Y("night_share:Q", title="Night-pass share of detections (about 1:30 am)", axis=alt.Axis(format="%")),

@@ -112,6 +112,11 @@ def numbers() -> dict:
         n["cens_nights"] = c["diwali_nights_with_missing_late_hours"]
         n["cens_n"] = c["n_diwalis"]
         n["cens_network"] = c["network_diwali_late_missing_share"]
+        n["cens_network_n"] = c.get("network_n_diwalis")
+        t = pd.read_csv(R() / "diwali_excess.csv")
+        net = t[(t["site"] == "cpcb_delhi") & (t["model"] == "fire")].set_index("year")["night_excess_lb"]
+        for y, v in net.dropna().items():
+            n[f"diwali_{int(y)}"] = float(v)
         n["us_evening_mean"] = b["us_embassy"]["evening_mean"]
         n["us_evening_p95"] = b["us_embassy"]["placebo_evening"]["p95"]
         n["fire_term_median_change"] = b["fire_term_effect_on_diwali_excess"]["median_change"]
@@ -195,17 +200,18 @@ FIG_META = [
      "night, CPCB Delhi network median, one line per year coloured by the firecracker rules. Shading marks 6 pm–3 am.",
      "CPCB Delhi network via OpenAQ; NASA FIRMS; ERA5."),
     ("fig07_nights", "Bans did not shrink the Diwali spike",
-     "Diwali-night excess PM2.5 by year. Filled points: CPCB network median, coloured by regime. Open points: US "
-     "Embassy, with missing hours carried forward. The band covers 90% of ordinary October–December nights.",
+     "Diwali-night excess PM2.5 (6 pm–3 am, above the weather-and-fire baseline) by year. Filled points: CPCB network "
+     "median, coloured by the firecracker rules. Open circles: US Embassy, with missing hours carried forward. The band "
+     "covers 90% of ordinary October–December nights in the network median.",
      "CPCB and US Embassy monitors via OpenAQ; NASA FIRMS; ERA5."),
     ("fig08_censoring", "The reference monitor goes dark when the air is worst",
      "Share of hours with no valid reading at the US Embassy monitor, Diwali nights against ordinary autumn nights.",
      "US Embassy New Delhi via OpenAQ."),
     ("fig09_cities", "The timing follows local custom",
-     "Median hourly excess PM2.5 around Diwali in five cities. Dotted lines mark the midnights before and after "
-     "Diwali day.",
+     "Median hourly excess PM2.5 above the baseline around Diwali in five cities (Delhi: CPCB network median; others: "
+     "US mission monitors). Dotted lines mark the midnights before and after Diwali day as dated in Delhi.",
      "CPCB Delhi network and US mission monitors via OpenAQ; ERA5."),
-    ("fig10_fingerprint", "Diwali night carries a combustion fingerprint",
+    ("fig10_fingerprint", "Fine particles and sulphur rise; traffic gases fall",
      "Diwali evening (6 pm–midnight) against the same hours on the five nights a week earlier, at CPCB Delhi sites. "
      "Thin lines are site-years; the thick line joins the medians.",
      "CPCB Delhi monitors via OpenAQ."),

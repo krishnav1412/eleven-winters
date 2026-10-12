@@ -109,6 +109,23 @@ def test_point_in_polygon_with_hole():
     assert _points_in_geometry(lon, lat, square).tolist() == [True, False, False]
 
 
+def test_fmt_for_prose():
+    from elevenwinters.report import fmt
+    assert fmt(1234.56) == "1,235"
+    assert fmt(0.523, 0, pct=True) == "52%"
+    assert fmt(-3.21, 1) == "−3.2"
+    assert fmt(float("nan")) == "n/a"
+
+
+def test_upwind_weighting_prefers_fires_upwind():
+    # Wind from the north-west (315 deg); a fire to the NW of Delhi is upwind, one to the SE is not.
+    brg_nw = bearing_deg(28.61, 77.21, 30.90, 75.86)
+    brg_se = bearing_deg(28.61, 77.21, 26.85, 80.95)
+    up = lambda b: max(0.0, np.cos(np.radians(b - 315)))  # noqa: E731
+    assert up(brg_nw) > 0.9
+    assert up(brg_se) == 0.0
+
+
 def test_festival_mask_and_window():
     idx = pd.date_range("2024-10-27", "2024-11-05", freq="D")
     m = festival_mask(idx, before=3, after=3)  # Diwali 2024 = 31 Oct

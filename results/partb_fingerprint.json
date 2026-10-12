@@ -1,0 +1,57 @@
+{
+  "n_site_years": 65,
+  "n_sites": 20,
+  "years": [
+    2016,
+    2017,
+    2018,
+    2019,
+    2021,
+    2025
+  ],
+  "pm25": {
+    "n": 65,
+    "median_diwali": 334.4792,
+    "median_ref": 125.8925,
+    "median_diff": 209.8582,
+    "median_pct_change": 168.5571,
+    "share_higher": 0.9846153846153847,
+    "wilcoxon_p": 2.52003821456237e-12
+  },
+  "so2": {
+    "n": 50,
+    "median_diwali": 22.608195304870605,
+    "median_ref": 14.95629596710205,
+    "median_diff": 4.668332576751709,
+    "median_pct_change": 37.08293116093159,
+    "share_higher": 0.7,
+    "wilcoxon_p": 2.191284211150446e-05
+  },
+  "no2": {
+    "n": 63,
+    "median_diwali": 75.73958587646484,
+    "median_ref": 80.84200286865234,
+    "median_diff": -6.1825103759765625,
+    "median_pct_change": -8.071427467750524,
+    "share_higher": 0.2857142857142857,
+    "wilcoxon_p": 0.01345687836060679
+  },
+  "co": {
+    "n": 60,
+    "median_diwali": 2.1481250524520874,
+    "median_ref": 2.3750109672546387,
+    "median_diff": -0.1049504280090332,
+    "median_pct_change": -10.857537542055635,
+    "share_higher": 0.2833333333333333,
+    "wilcoxon_p": 0.0023059722141599175
+  },
+  "ratio": {
+    "n": 47,
+    "median_diwali": 0.689064085483551,
+    "median_ref": 0.41310983896255493,
+    "median_diff": 0.2555392384529114,
+    "median_pct_change": 60.177898466984715,
+    "share_higher": 0.9574468085106383,
+    "wilcoxon_p": 4.689582056016661e-13
+  }
+}

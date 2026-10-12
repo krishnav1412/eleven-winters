@@ -211,7 +211,7 @@ def run() -> None:
         if receptor == US_DELHI and tag == "fire":
             bau.to_parquet(config.processed_dir() / "bau_hourly_us_delhi.parquet")
     table = pd.concat(tables, ignore_index=True)
-    table.round(2).to_csv(config.results_dir() / "diwali_excess.csv", index=False)
+    table.round(2).to_csv(config.results_dir() / "diwali_excess.csv", index=False, date_format="%Y-%m-%d")
     pd.concat(curves).round(2).to_parquet(config.processed_dir() / "diwali_event_curves.parquet", index=False)
     pl_all = pd.concat(placebos, ignore_index=True)
     pl_all.round(2).to_csv(config.results_dir() / "placebo_nights.csv", index=False)
@@ -249,8 +249,11 @@ def run() -> None:
         "ordinary_late_hours_missing_share": uspl["late_hours_missing"].sum() / (5 * len(uspl)),
         "diwali_nights_with_missing_late_hours": int((us["late_hours_missing"] > 0).sum()),
         "n_diwalis": int(len(us)),
-        "network_diwali_late_missing_share": net["late_hours_missing"].sum() / (5 * len(net)),
     }
+    # network share counted only over Diwalis the network covers (the 2022-24 archive gap is not censoring)
+    covered = net.dropna(subset=["night_excess_lb"])
+    results["censoring"]["network_diwali_late_missing_share"] = covered["late_hours_missing"].sum() / (5 * len(covered))
+    results["censoring"]["network_n_diwalis"] = int(len(covered))
     # disentanglement: does the Diwali excess still track farm-fire exposure?
     fi = pd.read_parquet(config.processed_dir() / "fire_index_delhi.parquet")
     for site, col in [(US_DELHI, "evening_excess"), (US_DELHI, "night_excess_lb")]:
