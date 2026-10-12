@@ -81,9 +81,11 @@ def lock(force: bool = False) -> dict:
         print("  forecast already locked; refusing to overwrite (pass force=True only before publication)")
         return json.loads(path.read_text(encoding="utf-8"))
     rec = build_forecast()
-    path.write_text(json.dumps(rec, indent=2), encoding="utf-8")
-    digest = hashlib.sha256(path.read_bytes()).hexdigest()
-    (PREREG / "SHA256SUMS").write_text(f"{digest}  diwali-2026-forecast.json\n", encoding="utf-8")
+    # write exact bytes (LF line endings) so the checksum matches the copy in git on every OS
+    payload = (json.dumps(rec, indent=2) + "\n").encode("utf-8")
+    path.write_bytes(payload)
+    digest = hashlib.sha256(payload).hexdigest()
+    (PREREG / "SHA256SUMS").write_bytes(f"{digest}  diwali-2026-forecast.json\n".encode())
     lines = [
         "# Diwali 2026 forecast (pre-registered)",
         "",
@@ -98,7 +100,9 @@ def lock(force: bool = False) -> dict:
     for k, v in rec["scenarios"].items():
         lines.append(f"| {names.get(k, k)} | {v['point']} | {v['interval_80'][0]} to {v['interval_80'][1]} "
                      f"| {', '.join(map(str, v['based_on_years']))} |")
-    lines += ["", rec["interval_method"], "", "Scoring: " + rec["scoring"], ""]
-    (PREREG / "README.md").write_text("\n".join(lines), encoding="utf-8")
+    lines += ["", rec["interval_method"], "", "Scoring: " + rec["scoring"], "",
+              "Verify: `sha256sum -c SHA256SUMS` (Linux/macOS) or "
+              "`Get-FileHash diwali-2026-forecast.json` (Windows PowerShell).", ""]
+    (PREREG / "README.md").write_bytes("\n".join(lines).encode("utf-8"))
     print(f"  forecast locked, sha256 {digest[:16]}...")
     return rec
