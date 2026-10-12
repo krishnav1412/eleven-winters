@@ -12,7 +12,7 @@ build/
 dist/
 
 # data lives outside the repo (EW_DATA_DIR); never commit raw downloads
-data/
+/data/
 *.parquet
 *.csv.gz
 
