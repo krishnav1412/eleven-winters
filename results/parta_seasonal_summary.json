@@ -1,16 +1,40 @@
 {
-  "n_sites": 48,
-  "n_cities": 12,
+  "n_sites": 66,
+  "n_cities": 23,
   "min_r2": 0.4,
-  "n_sites_modelled": 60,
-  "n_sites_below_r2": 12,
-  "weather_share_median_north": 0.6140083337062104,
-  "weather_share_median_rest": 0.8538119358217346,
-  "winter_obs_north": 142.99078369140625,
+  "n_sites_modelled": 103,
+  "n_sites_below_r2": 37,
+  "weather_share_median_north": 0.6194457178709006,
+  "weather_share_median_rest": 0.8083028428167267,
+  "winter_obs_north": 110.32085418701172,
   "winter_obs_rest": 65.74655151367188,
-  "winter_norm_north": 90.46231603298773,
+  "winter_norm_north": 77.57207927462423,
   "winter_norm_rest": 44.86032925801656,
-  "ns_gap_obs": 77.24423217773438,
-  "ns_gap_norm": 45.60198677497117,
-  "ns_gap_weather_share": 0.40963894016004054
+  "weather_share_delhi_ncr": 0.6175808801090059,
+  "weather_share_delhi_ncr_range": [
+    0.6137525578234005,
+    0.6800682664122002
+  ],
+  "n_cities_delhi_ncr": 5,
+  "weather_share_igp": 0.8237344552402541,
+  "weather_share_igp_range": [
+    0.7558622633408043,
+    0.9281509397686232
+  ],
+  "n_cities_igp": 6,
+  "weather_share_rest": 0.8083028428167267,
+  "weather_share_rest_range": [
+    0.6293704925901235,
+    0.8724505718689456
+  ],
+  "n_cities_rest": 5,
+  "weather_share_source": 0.4774644105788408,
+  "weather_share_source_range": [
+    0.38674510846431465,
+    0.6244106146567329
+  ],
+  "n_cities_source": 7,
+  "ns_gap_obs": 44.574302673339844,
+  "ns_gap_norm": 32.71175001660767,
+  "ns_gap_weather_share": 0.2661298538681849
 }

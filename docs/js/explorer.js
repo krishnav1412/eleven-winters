@@ -64,7 +64,8 @@
     var s = sites.find(function (x) { return x.site === site; });
     if (!s) { status.textContent = "No site matches that name. Pick one from the list."; return; }
     current = site;
-    status.textContent = s.days + " days with data, " + s.first + " to " + s.last + ". Model skill (cross-validated R² on log PM2.5): " + s.r2 + ".";
+    var note = parseFloat(s.r2) < 0.4 ? " This is below the 0.4 cut-off used in the paper, so read the weather-removed line with caution." : "";
+    status.textContent = s.days + " days with data, " + s.first + " to " + s.last + ". Model skill (cross-validated R² on log PM2.5): " + s.r2 + "." + note;
     fetch("data/sites/" + site + ".json").then(function (r) { return r.json(); }).then(render);
     try { localStorage.setItem("ew-site", site); } catch (e) {}
   }
