@@ -20,7 +20,8 @@ from elevenwinters import config, report
 PAPER = config.ROOT / "paper"
 REPO_URL = os.environ.get("EW_REPO_URL", "https://github.com/krishnav1412/eleven-winters")
 SITE_URL = os.environ.get("EW_SITE_URL", "https://krishnav1412.github.io/eleven-winters/")
-AFFILIATION = os.environ.get("EW_AFFILIATION", "Independent researcher")
+AFFILIATION = os.environ.get("EW_AFFILIATION", "School of Computer Science, Vellore Institute of Technology (VIT), Vellore, India")
+EMAIL = os.environ.get("EW_EMAIL", "agarwalkrishnav34@gmail.com")
 
 BROWSERS = [
     r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
@@ -39,7 +40,7 @@ def render_markdown() -> Path:
     env.filters["fmt"] = report.fmt
     md = env.get_template("paper.md.j2").render(
         n=report.numbers(), figs=report.figure_meta(), build_date=dt.date.today().strftime("%d %B %Y"),
-        repo_url=REPO_URL, site_url=SITE_URL, affiliation=AFFILIATION)
+        repo_url=REPO_URL, site_url=SITE_URL, affiliation=AFFILIATION, email=EMAIL)
     out = PAPER / "paper.md"
     out.write_text(md, encoding="utf-8")
     return out

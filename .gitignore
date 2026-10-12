@@ -38,3 +38,6 @@ paper/*.synctex.gz
 
 # local editor/agent settings
 .claude/
+
+# personal notes (video script, study guide) stay local
+notes/
