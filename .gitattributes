@@ -3,3 +3,4 @@
 *.pdf binary
 *.ttf binary
 *.parquet binary
+prereg/** -text
