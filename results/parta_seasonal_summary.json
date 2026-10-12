@@ -1,0 +1,16 @@
+{
+  "n_sites": 48,
+  "n_cities": 12,
+  "min_r2": 0.4,
+  "n_sites_modelled": 60,
+  "n_sites_below_r2": 12,
+  "weather_share_median_north": 0.6140083337062104,
+  "weather_share_median_rest": 0.8538119358217346,
+  "winter_obs_north": 142.99078369140625,
+  "winter_obs_rest": 65.74655151367188,
+  "winter_norm_north": 90.46231603298773,
+  "winter_norm_rest": 44.86032925801656,
+  "ns_gap_obs": 77.24423217773438,
+  "ns_gap_norm": 45.60198677497117,
+  "ns_gap_weather_share": 0.40963894016004054
+}

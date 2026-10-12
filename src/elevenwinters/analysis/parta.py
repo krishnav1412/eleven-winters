@@ -17,6 +17,7 @@ from elevenwinters.analysis.common import US_DELHI, daily_mean, save_json
 from elevenwinters.panel import load_meteo_hourly, load_site_hourly, site_table
 
 MIN_DAYS = 500
+MIN_R2 = 0.4          # sites whose weather model explains less than this are left out of comparisons
 WINTER = [11, 12, 1]
 MONSOON = [7, 8, 9]
 
@@ -61,9 +62,13 @@ def seasonal_gap(dw: pd.DataFrame | None = None) -> pd.DataFrame:
     weather_share = fraction of the observed gap that disappears once weather is removed."""
     dw = dw if dw is not None else pd.read_parquet(config.processed_dir() / "deweathered_daily.parquet")
     sites = site_table().set_index("site")
+    skill = pd.read_csv(config.results_dir() / "model_skill_daily.csv").set_index("site")["r2_cv"]
+    good = set(skill[skill >= MIN_R2].index)
     m = dw["date"].dt.month
     rows = []
     for site, g in dw.assign(m=m).groupby("site"):
+        if site not in good:
+            continue
         w, s = g[g["m"].isin(WINTER)], g[g["m"].isin(MONSOON)]
         if len(w) < 60 or len(s) < 60:
             continue
@@ -85,7 +90,8 @@ def seasonal_gap(dw: pd.DataFrame | None = None) -> pd.DataFrame:
     city.round(3).to_csv(config.results_dir() / "seasonal_gap_by_city.csv", index=False)
     north = city["region"].isin(["delhi_ncr", "source", "igp"])
     summary = {
-        "n_sites": int(len(out)), "n_cities": int(len(city)),
+        "n_sites": int(len(out)), "n_cities": int(len(city)), "min_r2": MIN_R2,
+        "n_sites_modelled": int(len(skill)), "n_sites_below_r2": int((skill < MIN_R2).sum()),
         "weather_share_median_north": float(city.loc[north, "weather_share"].median()),
         "weather_share_median_rest": float(city.loc[~north, "weather_share"].median()),
         "winter_obs_north": float(city.loc[north, "winter_obs"].median()),
@@ -119,7 +125,24 @@ def trend_delhi(dw: pd.DataFrame | None = None, site: str = US_DELHI) -> dict:
     annual = g["normalised"].resample("YS").mean()
     ann_n = g["normalised"].resample("YS").count()
     annual = annual[ann_n >= 300]
+    # Did the 2020 drop last? Compare deseasonalised levels before 2020 with after the 2020
+    # lockdown (June 2020 on), so the lockdown months themselves do not drive the answer.
+    pre = anom[anom.index < "2020-01-01"]
+    post = anom[anom.index >= "2020-06-01"]
+    lockdown = anom[(anom.index >= "2020-03-01") & (anom.index < "2020-06-01")]
+    level = float(monthly["normalised"].mean())
+    u = stats.mannwhitneyu(post, pre, alternative="less")
+    tpost = (post.index - post.index[0]).days / 365.25
+    s_post, _, lo_post, hi_post = stats.theilslopes(post.values, tpost)
+    out_step = {
+        "pre_2020_vs_post_lockdown_pct": 100 * (post.mean() - pre.mean()) / level,
+        "lockdown_months_pct": 100 * (lockdown.mean() - pre.mean()) / level if len(lockdown) else None,
+        "post_lockdown_slope_pct_per_year": 100 * s_post / level,
+        "post_lockdown_slope_ci_pct": [100 * lo_post / level, 100 * hi_post / level],
+        "step_mannwhitney_p": float(u.pvalue), "n_pre_months": int(len(pre)), "n_post_months": int(len(post)),
+    }
     out = {
+        **out_step,
         "site": site,
         "months": int(len(monthly)),
         "theil_sen_slope_per_year": slope, "slope_ci95": [lo, hi],

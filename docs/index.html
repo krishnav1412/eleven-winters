@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eleven Winters</title>
+<meta name="description" content="Separating weather, farm fires and fireworks in India's PM2.5, 2016–2026. An open, reproducible exploratory study.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FCFCFA'/%3E%3Ccircle cx='10' cy='16' r='5' fill='%23A3A69F'/%3E%3Ccircle cx='22' cy='16' r='5' fill='%231F211D'/%3E%3C/svg%3E">
+</head>
+<body data-root="">
+<div class="frame">
+  <header class="bar">
+    <a class="home" href="index.html">Eleven Winters</a>
+    <nav aria-label="Pages">
+      <a href="index.html" aria-current="page">Findings</a>
+      <a href="explorer.html" >City explorer</a>
+      <a href="forecast.html" >Diwali 2026 forecast</a>
+      <a href="methods.html" >Data and methods</a>
+      <a href="paper/eleven-winters.pdf">Paper (PDF)</a>
+    </nav>
+  </header>
+  
+<header class="masthead">
+  <div class="eyebrow">An open exploratory study · 2016–2026</div>
+  <h1>Eleven Winters</h1>
+  <p class="dek">Every winter, Delhi blames the weather, the farm fires in Punjab and Haryana, and Diwali. They arrive together, so nobody can say how much each one adds. We used the years when they didn't line up to pull them apart.</p>
+  <div class="meta">
+    <span><b>105</b> monitoring sites</span>
+    <span><b>39</b> cities</span>
+    <span><b>2,841,635</b> hours of PM2.5</span>
+    <span>Diwali 2026 forecast <a href="forecast.html"><b>locked</b></a></span>
+  </div>
+  <ul class="findings">
+    <li><span class="code">Diwali</span><b>Bans did not shrink the spike</b>Diwali night adds 127–392 µg/m³ above what weather and farm smoke explain, in every year we can see, whatever the firecracker rules were.</li>
+    <li><span class="code">Monitoring</span><b>The reference monitor goes dark at the peak</b>52% of late-night Diwali hours are missing at the US Embassy monitor, against 4% on ordinary nights.</li>
+    <li><span class="code">Farm fires</span><b>Counts fell 94%; the night share rose</b>The satellite's 1:30 am pass now catches 4.7% of fires, up from 0.2%. Burning has moved out of its daytime view.</li>
+    <li><span class="code">Weather</span><b>Weather is part of the story, not all of it</b>On the Gangetic Plain, weather explains about 61% of the jump from monsoon to winter. The rest is emissions.</li>
+  </ul>
+</header>
+
+<section id="tape">
+  <div class="rail">The decade</div>
+  <div class="main">
+    <h2>Ten years of Delhi's air, drawn as filter tape</h2>
+    <p>The monitors behind these numbers pull air through white glass-fibre tape and leave a grey spot for each sample. The dirtier the air, the darker the spot. Each strip below is one season, July to June, as recorded at the US Embassy in New Delhi. Every year the tape darkens from late October and stays dark into January. The marigold ticks are Diwali. White gaps are days the monitor did not report.</p>
+  </div>
+  
+<figure class="wide" id="fig03_tape">
+  <div class="fig-head"><h3>Delhi&#39;s decade, drawn as filter tape</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig03_tape" role="img" aria-label="Delhi&#39;s decade, drawn as filter tape"></div></div>
+  <p class="sr-summary">Daily PM2.5 at the US Embassy in New Delhi from 2016 to 2026, one row per season. Every season darkens from late October to January.</p>
+  <figcaption>Daily mean PM2.5 at the US Embassy, one strip per season from July to June, shaded by India&#39;s National AQI category. Marigold ticks mark Diwali.<span class="src">Source: US Embassy New Delhi monitor via OpenAQ; NAQI breakpoints from CPCB.</span></figcaption>
+</figure>
+</section>
+
+<section id="design">
+  <div class="rail">The design</div>
+  <div class="main">
+    <h2>Three things that change from year to year</h2>
+    <p>Diwali follows the lunar calendar, so it moves across the burning season. In 2017 it fell on 19 October, before most farm fires. In 2020 it fell on 14 November, at their height. Delhi's firecracker rules changed four times in the same decade. And the timing of crop burning itself appears to have shifted. These changes let us compare like with like.</p>
+  </div>
+  
+<figure class="wide" id="fig01_design">
+  <div class="fig-head"><h3>Diwali moves through the burning season, and the rules keep changing</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig01_design" role="img" aria-label="Diwali moves through the burning season, and the rules keep changing"></div></div>
+  <p class="sr-summary">Diwali dates from 2016 to 2026 placed on an October to November axis, with the firecracker rules for each year.</p>
+  <figcaption>Diwali (Lakshmi Puja) dates, 2016–2026, and the firecracker rules in force in Delhi-NCR. The shaded band marks 1–15 November, commonly reported as the peak of paddy-residue burning.<span class="src">Source: Supreme Court, NGT and Delhi government orders as reported; panchang dates.</span></figcaption>
+</figure>
+</section>
+
+<section id="weather">
+  <div class="rail">A · Weather</div>
+  <div class="main">
+    <h2>How much of the winter is weather?</h2>
+    <p>For every monitor, a machine-learning model learns how PM2.5 responds to temperature, humidity, wind, rain and the height of the mixed layer of air near the ground. Re-running it hundreds of times with the weather shuffled gives the pollution each site would have had under typical weather.</p>
+    <p>On the Indo-Gangetic Plain, weather accounts for a median 61% of the rise from monsoon to winter; elsewhere, 85%. Removing the weather narrows the winter gap between northern and other cities from 77 to 46 µg/m³. Most of the north's winter problem is what is emitted, not the weather it is emitted into.</p>
+  </div>
+  
+<figure class="wide" id="fig04_gap">
+  <div class="fig-head"><h3>Weather explains part of the winter gap, not all of it</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig04_gap" role="img" aria-label="Weather explains part of the winter gap, not all of it"></div></div>
+  <p class="sr-summary">For each city, the winter minus monsoon PM2.5 gap before and after removing weather.</p>
+  <figcaption>Winter (Nov–Jan) minus monsoon (Jul–Sep) PM2.5 by city, as observed (open circle) and after removing weather (filled). The number is the share of the gap that weather accounts for.<span class="src">Source: CPCB and US mission monitors; ERA5 via Open-Meteo; LightGBM weather normalisation.</span></figcaption>
+</figure>
+  
+  <div class="main col2" style="margin-top:34px">
+    <h3>Did the 2020 drop last?</h3>
+    <p>Mostly. With the weather taken out, Delhi's PM2.5 was 14% below its 2016–2019 level during the lockdown. From mid-2020 on it stayed about 11% below. But since then it has barely moved: down about 0.5% a year.</p>
+  </div>
+  
+  
+<figure class="wide" id="fig05_trend">
+  <div class="fig-head"><h3>Delhi stepped down in 2020 and has barely moved since</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig05_trend" role="img" aria-label="Delhi stepped down in 2020 and has barely moved since"></div></div>
+  <p class="sr-summary">Delhi&#39;s monthly PM2.5 at the US Embassy, observed and weather-normalised, 2016 to 2026, with a step down in 2020.</p>
+  <figcaption>Monthly PM2.5 at the US Embassy, observed and weather-normalised. The dashed line marks the change point found in the deseasonalised normalised series; the shaded band is the 2020 national lockdown.<span class="src">Source: US Embassy New Delhi; ERA5 via Open-Meteo; PELT change-point detection.</span></figcaption>
+</figure>
+</section>
+
+<section id="diwali">
+  <div class="rail">B · Diwali</div>
+  <div class="main">
+    <h2>Diwali night, with the weather and the farm smoke taken out</h2>
+    <p>We built a baseline for every hour: what PM2.5 should have been given that night's weather, the time of year and how much farm smoke the wind was carrying from Punjab and Haryana. The model never sees Diwali, and every hour is predicted by a version of it that never saw that week. Diwali's excess is what the air held above that baseline from 6 pm to 3 am.</p>
+    <p>In the CPCB network median, Diwali night added between 127 and 392 µg/m³ in every year with data. Among 211 ordinary autumn nights scored the same way, the 99th percentile was 193.</p>
+  </div>
+  
+<figure class="wide" id="fig06_event">
+  <div class="fig-head"><h3>Every Diwali night rises far above the weather-and-fire baseline</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig06_event" role="img" aria-label="Every Diwali night rises far above the weather-and-fire baseline"></div></div>
+  <p class="sr-summary">Hour by hour PM2.5 above the baseline around Diwali night, one line per year, coloured by the firecracker rules.</p>
+  <figcaption>Hourly PM2.5 above the business-as-usual baseline (weather, calendar and wind-aware fire index) around Diwali night, CPCB Delhi network median, one line per year coloured by the firecracker rules. Shading marks 6 pm–3 am.<span class="src">Source: CPCB Delhi network via OpenAQ; NASA FIRMS; ERA5.</span></figcaption>
+</figure>
+  <div class="main col2" style="margin-top:34px">
+    <h3>The rules made no visible difference</h3>
+    <p>Mean Diwali-night excess was 192 µg/m³ in the two years without a bursting restriction, 303 with green crackers and 366 under a full ban. The two largest nights in the record came in 2021, under a full ban, and 2025, when green crackers were allowed again. The smallest came in 2017, when sales were suspended weeks before an early Diwali. There are only a few Diwalis per regime, so this is not proof that bans cannot work, but it gives no sign that these did.</p>
+  </div>
+  
+<figure class="wide" id="fig07_nights">
+  <div class="fig-head"><h3>Bans did not shrink the Diwali spike</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig07_nights" role="img" aria-label="Bans did not shrink the Diwali spike"></div></div>
+  <p class="sr-summary">Diwali night excess PM2.5 for each year from 2016 to 2025, against the range of ordinary autumn nights.</p>
+  <figcaption>Diwali-night excess PM2.5 (6 pm–3 am, above the weather-and-fire baseline) by year. Filled points: CPCB network median, coloured by the firecracker rules. Open circles: US Embassy, with missing hours carried forward. The band covers 90% of ordinary October–December nights in the network median.<span class="src">Source: CPCB and US Embassy monitors via OpenAQ; NASA FIRMS; ERA5.</span></figcaption>
+</figure>
+  <div class="main col2" style="margin-top:34px">
+    <h3>The monitor that goes dark</h3>
+    <p>The US Embassy monitor is the most-used reference for Delhi. On Diwali it often repeats its last reading and then stops reporting during the worst hours. Late-night hours go missing 13 times as often as on an ordinary night, so any Diwali average built on this monitor alone leaves out the peak.</p>
+  </div>
+  
+<figure class="wide" id="fig08_censoring">
+  <div class="fig-head"><h3>The reference monitor goes dark when the air is worst</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig08_censoring" role="img" aria-label="The reference monitor goes dark when the air is worst"></div></div>
+  <p class="sr-summary">Share of hours missing at the US Embassy monitor from 5 pm to 6 am, Diwali nights against ordinary nights.</p>
+  <figcaption>Share of hours with no valid reading at the US Embassy monitor, Diwali nights against ordinary autumn nights.<span class="src">Source: US Embassy New Delhi via OpenAQ.</span></figcaption>
+</figure>
+  <div class="main col2" style="margin-top:34px">
+    <h3>A fingerprint of fireworks</h3>
+    <p>Compared with the same hours a week earlier, Diwali evening air is finer and more sulphurous. The PM2.5 to PM10 ratio rises from 0.41 to 0.69, and SO₂ rises by 37%. The traffic gases go the other way: NO₂ and CO both fall slightly, as fewer people drive. Fine particles and sulphur up, traffic down: that is fireworks.</p>
+    <p>The timing follows local custom. Delhi peaks around midnight. Mumbai and Hyderabad peak between 8 and 11 pm. Chennai peaks on the evening before, when Tamil Nadu celebrates Deepavali.</p>
+  </div>
+  
+<figure class="wide" id="fig10_fingerprint">
+  <div class="fig-head"><h3>Fine particles and sulphur rise; traffic gases fall</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig10_fingerprint" role="img" aria-label="Fine particles and sulphur rise; traffic gases fall"></div></div>
+  <p class="sr-summary">Paired comparison of Diwali evening against reference evenings for PM2.5 to PM10 ratio, sulphur dioxide, carbon monoxide and nitrogen dioxide.</p>
+  <figcaption>Diwali evening (6 pm–midnight) against the same hours on the five nights a week earlier, at CPCB Delhi sites. Thin lines are site-years; the thick line joins the medians.<span class="src">Source: CPCB Delhi monitors via OpenAQ.</span></figcaption>
+</figure>
+  
+<figure class="wide" id="fig09_cities">
+  <div class="fig-head"><h3>The timing follows local custom</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig09_cities" role="img" aria-label="The timing follows local custom"></div></div>
+  <p class="sr-summary">Median excess PM2.5 by hour around Diwali in Delhi, Kolkata, Mumbai, Hyderabad and Chennai.</p>
+  <figcaption>Median hourly excess PM2.5 above the baseline around Diwali in five cities (Delhi: CPCB network median; others: US mission monitors). Dotted lines mark the midnights before and after Diwali day as dated in Delhi.<span class="src">Source: CPCB Delhi network and US mission monitors via OpenAQ; ERA5.</span></figcaption>
+</figure>
+</section>
+
+<section id="fires">
+  <div class="rail">C · Farm fires</div>
+  <div class="main">
+    <h2>Fewer fires counted, but more of them at night</h2>
+    <p>Official progress on stubble burning is measured in satellite fire counts. In Punjab and Haryana, VIIRS detections in October and November fell 94% between 2021 and 2025. But the same satellite also passes at 1:30 am, and the share of fires it catches then rose from 0.2% to 4.7%. More fires are still burning in the middle of the night, which is what you would see if farmers now light them after the afternoon pass.</p>
+  </div>
+  
+<figure class="wide" id="fig11_fires">
+  <div class="fig-head"><h3>Daytime detections collapsed while night detections rose</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig11_fires" role="img" aria-label="Daytime detections collapsed while night detections rose"></div></div>
+  <p class="sr-summary">Afternoon-pass fire detections fall sharply after 2021 while the night-pass share rises from under one percent to several percent.</p>
+  <figcaption>VIIRS S-NPP fire detections in Punjab and Haryana, October–November, split by overpass, after removing fixed heat sources. Diamonds mark official Punjab season counts.<span class="src">Source: NASA FIRMS VIIRS S-NPP; official counts as reported by PTI and the Government of India.</span></figcaption>
+</figure>
+  <div class="main col2" style="margin-top:34px">
+    <h3>Each counted fire now carries more smoke</h3>
+    <p>Delhi's weather-adjusted PM2.5 follows upwind fires over one to four days. From 2016 to 2021, 100 units of the fire index went with about 2.2% more PM2.5. In 2025 the same 100 units went with 25% more. The 2025 estimate is uncertain (95% interval 0 to 55%), but it is the pattern you would expect if each detected fire now stands for more burning.</p>
+  </div>
+  
+<figure class="wide" id="fig12_coupling">
+  <div class="fig-head"><h3>Each detected fire now goes with more smoke in Delhi</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig12_coupling" role="img" aria-label="Each detected fire now goes with more smoke in Delhi"></div></div>
+  <p class="sr-summary">Percent rise in Delhi PM2.5 per 100 fire index units by season, with confidence intervals; 2025 stands well above earlier years.</p>
+  <figcaption>Percent change in Delhi&#39;s weather-adjusted PM2.5 per 100 units of the wind-aware fire index, by season, with 95% confidence intervals (HAC standard errors).<span class="src">Source: US Embassy New Delhi; NASA FIRMS; ERA5.</span></figcaption>
+</figure>
+  <div class="main col2" style="margin-top:34px">
+    <h3>The ground monitors can't confirm it yet</h3>
+    <p>If burning moved to the evening, monitors inside Punjab and Haryana should see more evening pollution during the harvest. They don't, so far. But the open archive is missing 2023 and 2024, and 2025 had so little burning that a change in its timing would barely move a city monitor. We report this as a test that could not yet be run, not as evidence against the shift.</p>
+  </div>
+  
+<figure class="wide" id="fig13_evening">
+  <div class="fig-head"><h3>Ground monitors in Punjab and Haryana do not yet show an evening shift</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig13_evening" role="img" aria-label="Ground monitors in Punjab and Haryana do not yet show an evening shift"></div></div>
+  <p class="sr-summary">Harvest evening ratio relative to December for monitors in Punjab and Haryana by season.</p>
+  <figcaption>Evening-to-midday PM2.5 ratio in the harvest window divided by the same ratio in December, per monitor and season. Ticks mark the median. Values above 1 mean the evening share rises at harvest.<span class="src">Source: CPCB monitors in Punjab, Haryana and Chandigarh via OpenAQ.</span></figcaption>
+</figure>
+</section>
+
+<section id="forecast">
+  <div class="rail">D · Forecast</div>
+  <div class="main">
+    <h2>A forecast we can be wrong about</h2>
+    <p>Explaining the past is easy to overdo. So before Diwali 2026 we locked a forecast of the excess for each possible set of firecracker rules, published its checksum, and will score it after 8 November.</p>
+    <p><a href="forecast.html">See the locked forecast</a></p>
+  </div>
+</section>
+
+<section id="more">
+  <div class="rail">More</div>
+  <div class="main">
+    <p>Explore any of the 105 monitors in the <a href="explorer.html">city explorer</a>, read how every number is made in <a href="methods.html">data and methods</a>, or read the <a href="paper/eleven-winters.pdf">full paper</a>.</p>
+  </div>
+</section>
+
+  <footer>
+    <span>Krishnav Agarwal · 2026 · Code MIT, derived data CC BY 4.0</span>
+    <span>Data: CPCB and US mission monitors via OpenAQ · NASA FIRMS · ERA5 via Open-Meteo</span>
+  </footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vega@6.4.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@7.2.0"></script>
+<script src="js/charts.js"></script>
+
+</body>
+</html>

@@ -23,7 +23,7 @@
   <div class="rail">The decade</div>
   <div class="main">
     <h2>Ten years of Delhi's air, drawn as filter tape</h2>
-    <p>The monitors behind these numbers pull air through white glass-fibre tape and leave a grey spot for each sample. The dirtier the air, the darker the spot. Each strip below is one season, July to June, as recorded at the US Embassy in New Delhi. The dark band is November. The marigold ticks are Diwali.</p>
+    <p>The monitors behind these numbers pull air through white glass-fibre tape and leave a grey spot for each sample. The dirtier the air, the darker the spot. Each strip below is one season, July to June, as recorded at the US Embassy in New Delhi. Every year the tape darkens from late October and stays dark into January. The marigold ticks are Diwali. White gaps are days the monitor did not report.</p>
   </div>
   {{ figure("fig03_tape", figs, "Daily PM2.5 at the US Embassy in New Delhi from 2016 to 2026, one row per season. Every season darkens from late October to January.") }}
 </section>
@@ -45,7 +45,13 @@
     {% if n.gap_n_sites %}<p>On the Indo-Gangetic Plain, weather accounts for a median {{ n.gap_weather_share_median_north|fmt(0, pct=True) }} of the rise from monsoon to winter; elsewhere, {{ n.gap_weather_share_median_rest|fmt(0, pct=True) }}. Removing the weather narrows the winter gap between northern and other cities from {{ n.gap_ns_gap_obs|fmt }} to {{ n.gap_ns_gap_norm|fmt }} µg/m³. Most of the north's winter problem is what is emitted, not the weather it is emitted into.</p>{% endif %}
   </div>
   {{ figure("fig04_gap", figs, "For each city, the winter minus monsoon PM2.5 gap before and after removing weather.") }}
-  {{ figure("fig05_trend", figs, "Delhi's monthly PM2.5 at the US Embassy, observed and weather-normalised, 2016 to 2026.") }}
+  {% if n.trend_step_pct is defined %}
+  <div class="main col2" style="margin-top:34px">
+    <h3>Did the 2020 drop last?</h3>
+    <p>Mostly. With the weather taken out, Delhi's PM2.5 was {{ (-n.trend_lockdown_pct)|fmt(0) }}% below its 2016–2019 level during the lockdown. From mid-2020 on it stayed about {{ (-n.trend_step_pct)|fmt(0) }}% below. But since then it has barely moved: down about {{ (-n.trend_post_slope_pct)|fmt(1) }}% a year.</p>
+  </div>
+  {% endif %}
+  {{ figure("fig05_trend", figs, "Delhi's monthly PM2.5 at the US Embassy, observed and weather-normalised, 2016 to 2026, with a step down in 2020.") }}
 </section>
 
 <section id="diwali">
@@ -84,7 +90,7 @@
   {{ figure("fig11_fires", figs, "Afternoon-pass fire detections fall sharply after 2021 while the night-pass share rises from under one percent to several percent.") }}
   <div class="main col2" style="margin-top:34px">
     <h3>Each counted fire now carries more smoke</h3>
-    <p>Delhi's weather-adjusted PM2.5 follows upwind fires over one to four days. From 2016 to 2021, 100 units of the fire index went with about {{ n.coupling_early|fmt(1) }}% more PM2.5. In 2025 the same 100 units went with {{ n.coupling_2025|fmt(0) }}% more. If each detected fire now stands for more burning, that is the pattern you would expect.</p>
+    <p>Delhi's weather-adjusted PM2.5 follows upwind fires over one to four days. From 2016 to 2021, 100 units of the fire index went with about {{ n.coupling_early|fmt(1) }}% more PM2.5. In 2025 the same 100 units went with {{ n.coupling_2025|fmt(0) }}% more. The 2025 estimate is uncertain (95% interval {{ n.coupling_2025_lo|fmt(0) }} to {{ n.coupling_2025_hi|fmt(0) }}%), but it is the pattern you would expect if each detected fire now stands for more burning.</p>
   </div>
   {{ figure("fig12_coupling", figs, "Percent rise in Delhi PM2.5 per 100 fire index units by season, with confidence intervals; 2025 stands well above earlier years.") }}
   <div class="main col2" style="margin-top:34px">

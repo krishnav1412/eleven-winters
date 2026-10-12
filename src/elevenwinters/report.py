@@ -87,6 +87,11 @@ def numbers() -> dict:
         n["trend_change_points"] = tr["change_points"]
         n["trend_annual"] = tr["annual_normalised"]
         n["trend_post2020_vs_2019_pct"] = tr.get("mean_2021_2025_vs_2019_pct")
+        n["trend_step_pct"] = tr.get("pre_2020_vs_post_lockdown_pct")
+        n["trend_lockdown_pct"] = tr.get("lockdown_months_pct")
+        n["trend_post_slope_pct"] = tr.get("post_lockdown_slope_pct_per_year")
+        n["trend_post_slope_ci"] = tr.get("post_lockdown_slope_ci_pct")
+        n["trend_step_p"] = tr.get("step_mannwhitney_p")
 
     b = _safe(lambda: load_json("partb_summary.json"))
     if b:
@@ -191,9 +196,9 @@ FIG_META = [
      "Winter (Nov–Jan) minus monsoon (Jul–Sep) PM2.5 by city, as observed (open circle) and after removing weather "
      "(filled). The number is the share of the gap that weather accounts for.",
      "CPCB and US mission monitors; ERA5 via Open-Meteo; LightGBM weather normalisation."),
-    ("fig05_trend", "In Delhi, the 2020 dip did not become a lasting break",
-     "Monthly PM2.5 at the US Embassy, observed and weather-normalised. Dashed lines mark change points found in the "
-     "normalised series.",
+    ("fig05_trend", "Delhi stepped down in 2020 and has barely moved since",
+     "Monthly PM2.5 at the US Embassy, observed and weather-normalised. The dashed line marks the change point found in "
+     "the deseasonalised normalised series; the shaded band is the 2020 national lockdown.",
      "US Embassy New Delhi; ERA5 via Open-Meteo; PELT change-point detection."),
     ("fig06_event", "Every Diwali night rises far above the weather-and-fire baseline",
      "Hourly PM2.5 above the business-as-usual baseline (weather, calendar and wind-aware fire index) around Diwali "
