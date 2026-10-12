@@ -99,6 +99,10 @@ def seasonal_gap(dw: pd.DataFrame | None = None) -> pd.DataFrame:
         "winter_norm_north": float(city.loc[north, "winter_norm"].median()),
         "winter_norm_rest": float(city.loc[~north, "winter_norm"].median()),
     }
+    for region, g in city.groupby("region"):
+        summary[f"weather_share_{region}"] = float(g["weather_share"].median())
+        summary[f"weather_share_{region}_range"] = [float(g["weather_share"].min()), float(g["weather_share"].max())]
+        summary[f"n_cities_{region}"] = int(len(g))
     summary["ns_gap_obs"] = summary["winter_obs_north"] - summary["winter_obs_rest"]
     summary["ns_gap_norm"] = summary["winter_norm_north"] - summary["winter_norm_rest"]
     summary["ns_gap_weather_share"] = 1 - summary["ns_gap_norm"] / summary["ns_gap_obs"]

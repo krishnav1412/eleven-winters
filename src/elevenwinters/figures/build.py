@@ -86,11 +86,13 @@ def fig_coverage(mode: str):
     sh["row"] = np.where(sh["network"] == "us_mission", "US mission: " + sh["city"], sh["city"])
     cov = sh.groupby(["row", "region", "month"])["datetime"].nunique().reset_index(name="hours")
     cov["share"] = (cov["hours"] / (cov["month"].dt.days_in_month * 24)).clip(upper=1)
+    cov["month_end"] = cov["month"] + pd.offsets.MonthBegin(1)
     order_region = {"delhi_ncr": 0, "source": 1, "igp": 2, "rest": 3}
     rows = (cov.assign(us=cov["row"].str.startswith("US"), ro=cov["region"].map(order_region))
             .drop_duplicates("row").sort_values(["us", "ro", "row"])["row"].tolist())
     return alt.Chart(cov).mark_rect().encode(
         x=alt.X("month:T", title=None, axis=alt.Axis(format="%Y", tickCount="year", labelFont=FONT_NUM)),
+        x2="month_end:T",
         y=alt.Y("row:N", sort=rows, title=None, axis=alt.Axis(labelFont=FONT_LABEL, labelFontSize=10, labelColor=p["ink"])),
         color=alt.Color("share:Q", title="Share of hours with data",
                         scale=alt.Scale(domain=[0, 1], range=[p["band"], p["ink"]]),

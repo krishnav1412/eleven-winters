@@ -75,7 +75,7 @@
   <div class="main">
     <h2>Taking the weather out</h2>
     <p>For each site we fit a gradient-boosted tree model (LightGBM) of log PM2.5 on weather and calendar terms. To normalise, we predict each day 200 times with the weather columns replaced by draws from the site's whole record, keeping the date fixed (Grange et al., 2018). The average is the PM2.5 expected under typical weather.</p>
-    <p>Model skill, from five-fold cross-validation with whole calendar years held out: median R² of 0.65 on log PM2.5 across 60 sites (interquartile range 0.43 to 0.74).</p>
+    <p>Model skill, from five-fold cross-validation with whole calendar years held out: median R² of 0.52 on log PM2.5 across 103 sites (interquartile range 0.28 to 0.68).</p>
     <h3>The Diwali baseline</h3>
     <p>For events we use an hourly model that also knows about farm fires, through a wind-aware fire index: VIIRS detections in Punjab and Haryana weighted by how directly upwind of Delhi they are and by distance (300 km e-folding), with lags of up to three days. Diwali windows (three days either side) are never used for training, and every hour is predicted by a model that did not see that week. Diwali-night excess is observed minus baseline, averaged from 6 pm to 3 am. Ordinary nights between October and mid-December are scored the same way to show what normal variation looks like.</p>
     <h3>Fire coupling</h3>
