@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% from "_figure.html" import figure %}
+{% block content %}
+<header class="masthead">
+  <div class="eyebrow">An open exploratory study · {{ n.period_start[:4] }}–{{ n.period_end[:4] }}</div>
+  <h1>Eleven Winters</h1>
+  <p class="dek">Every winter, Delhi blames the weather, the farm fires in Punjab and Haryana, and Diwali. They arrive together, so nobody can say how much each one adds. We used the years when they didn't line up to pull them apart.</p>
+  <div class="meta">
+    <span><b>{{ n.n_sites }}</b> monitoring sites</span>
+    <span><b>{{ n.n_cities }}</b> cities</span>
+    <span><b>{{ n.pm25_hours|fmt }}</b> hours of PM2.5</span>
+    <span>Diwali 2026 forecast <a href="forecast.html"><b>locked</b></a></span>
+  </div>
+  <ul class="findings">
+    <li><span class="code">Diwali</span><b>Bans did not shrink the spike</b>Diwali night adds {{ n.diwali_main_min|fmt }}–{{ n.diwali_main_max|fmt }} µg/m³ above what weather and farm smoke explain, in every year we can see, whatever the firecracker rules were.</li>
+    <li><span class="code">Monitoring</span><b>The reference monitor goes dark at the peak</b>{{ n.cens_diwali|fmt(0, pct=True) }} of late-night Diwali hours are missing at the US Embassy monitor, against {{ n.cens_ordinary|fmt(0, pct=True) }} on ordinary nights.</li>
+    <li><span class="code">Farm fires</span><b>Counts fell {{ n.viirs_drop_2021_2025|fmt(0, pct=True) }}; the night share rose</b>The satellite's 1:30 am pass now catches {{ n.night_share_2025|fmt(1, pct=True) }} of fires, up from {{ n.night_share_2016_2021|fmt(1, pct=True) }}. Burning has moved out of its daytime view.</li>
+    <li><span class="code">Weather</span><b>Weather is part of the story, not all of it</b>{% if n.gap_weather_share_median_north is defined %}On the Gangetic Plain, weather explains about {{ n.gap_weather_share_median_north|fmt(0, pct=True) }} of the jump from monsoon to winter. The rest is emissions.{% else %}Weather-normalised series for every site are in the city explorer.{% endif %}</li>
+  </ul>
+</header>
+
+<section id="tape">
+  <div class="rail">The decade</div>
+  <div class="main">
+    <h2>Ten years of Delhi's air, drawn as filter tape</h2>
+    <p>The monitors behind these numbers pull air through white glass-fibre tape and leave a grey spot for each sample. The dirtier the air, the darker the spot. Each strip below is one season, July to June, as recorded at the US Embassy in New Delhi. The dark band is November. The marigold ticks are Diwali.</p>
+  </div>
+  {{ figure("fig03_tape", figs, "Daily PM2.5 at the US Embassy in New Delhi from 2016 to 2026, one row per season. Every season darkens from late October to January.") }}
+</section>
+
+<section id="design">
+  <div class="rail">The design</div>
+  <div class="main">
+    <h2>Three things that change from year to year</h2>
+    <p>Diwali follows the lunar calendar, so it moves across the burning season. In 2017 it fell on 19 October, before most farm fires. In 2020 it fell on 14 November, at their height. Delhi's firecracker rules changed four times in the same decade. And the timing of crop burning itself appears to have shifted. These changes let us compare like with like.</p>
+  </div>
+  {{ figure("fig01_design", figs, "Diwali dates from 2016 to 2026 placed on an October to November axis, with the firecracker rules for each year.") }}
+</section>
+
+<section id="weather">
+  <div class="rail">A · Weather</div>
+  <div class="main">
+    <h2>How much of the winter is weather?</h2>
+    <p>For every monitor, a machine-learning model learns how PM2.5 responds to temperature, humidity, wind, rain and the height of the mixed layer of air near the ground. Re-running it hundreds of times with the weather shuffled gives the pollution each site would have had under typical weather.</p>
+    {% if n.gap_n_sites %}<p>On the Indo-Gangetic Plain, weather accounts for a median {{ n.gap_weather_share_median_north|fmt(0, pct=True) }} of the rise from monsoon to winter; elsewhere, {{ n.gap_weather_share_median_rest|fmt(0, pct=True) }}. Removing the weather narrows the winter gap between northern and other cities from {{ n.gap_ns_gap_obs|fmt }} to {{ n.gap_ns_gap_norm|fmt }} µg/m³. Most of the north's winter problem is what is emitted, not the weather it is emitted into.</p>{% endif %}
+  </div>
+  {{ figure("fig04_gap", figs, "For each city, the winter minus monsoon PM2.5 gap before and after removing weather.") }}
+  {{ figure("fig05_trend", figs, "Delhi's monthly PM2.5 at the US Embassy, observed and weather-normalised, 2016 to 2026.") }}
+</section>
+
+<section id="diwali">
+  <div class="rail">B · Diwali</div>
+  <div class="main">
+    <h2>Diwali night, with the weather and the farm smoke taken out</h2>
+    <p>We built a baseline for every hour: what PM2.5 should have been given that night's weather, the time of year and how much farm smoke the wind was carrying from Punjab and Haryana. The model never sees Diwali, and every hour is predicted by a version of it that never saw that week. Diwali's excess is what the air held above that baseline from 6 pm to 3 am.</p>
+    <p>In the CPCB network median, Diwali night added between {{ n.diwali_main_min|fmt }} and {{ n.diwali_main_max|fmt }} µg/m³ in every year with data. Among {{ n.diwali_placebo_n|fmt }} ordinary autumn nights scored the same way, the 99th percentile was {{ n.diwali_placebo_p99|fmt }}.</p>
+  </div>
+  {{ figure("fig06_event", figs, "Hour by hour PM2.5 above the baseline around Diwali night, one line per year, coloured by the firecracker rules.") }}
+  <div class="main col2" style="margin-top:34px">
+    <h3>The rules made no visible difference</h3>
+    <p>Mean Diwali-night excess was {{ n.diwali_permissive_mean|fmt }} µg/m³ in years with no effective restriction, {{ n.diwali_green_window_mean|fmt }} with green crackers and {{ n.diwali_full_ban_mean|fmt }} under a full ban. There are only a few Diwalis per regime, so this is not proof that bans cannot work, but it gives no sign that these did.</p>
+  </div>
+  {{ figure("fig07_nights", figs, "Diwali night excess PM2.5 for each year from 2016 to 2025, against the range of ordinary autumn nights.") }}
+  <div class="main col2" style="margin-top:34px">
+    <h3>The monitor that goes dark</h3>
+    <p>The US Embassy monitor is the most-used reference for Delhi. On Diwali it often repeats its last reading and then stops reporting during the worst hours. Late-night hours go missing {{ n.cens_ratio|fmt(0) }} times as often as on an ordinary night, so any Diwali average built on this monitor alone leaves out the peak.</p>
+  </div>
+  {{ figure("fig08_censoring", figs, "Share of hours missing at the US Embassy monitor from 5 pm to 6 am, Diwali nights against ordinary nights.") }}
+  <div class="main col2" style="margin-top:34px">
+    <h3>A fingerprint of fireworks</h3>
+    <p>On Diwali evening, compared with the same hours a week earlier, the air gets finer and more sulphurous: the PM2.5 to PM10 ratio and SO₂ both rise, while NO₂, mostly from traffic, does not follow. The timing also differs between cities. In Delhi the excess builds into the night. In Chennai, where Deepavali is celebrated at dawn, part of it comes in the morning.</p>
+  </div>
+  {{ figure("fig10_fingerprint", figs, "Paired comparison of Diwali evening against reference evenings for PM2.5 to PM10 ratio, sulphur dioxide, carbon monoxide and nitrogen dioxide.") }}
+  {{ figure("fig09_cities", figs, "Median excess PM2.5 by hour around Diwali in Delhi, Kolkata, Mumbai, Hyderabad and Chennai.") }}
+</section>
+
+<section id="fires">
+  <div class="rail">C · Farm fires</div>
+  <div class="main">
+    <h2>Fewer fires counted, but more of them at night</h2>
+    <p>Official progress on stubble burning is measured in satellite fire counts. In Punjab and Haryana, VIIRS detections in October and November fell {{ n.viirs_drop_2021_2025|fmt(0, pct=True) }} between 2021 and 2025. But the same satellite also passes at 1:30 am, and the share of fires it catches then rose from {{ n.night_share_2016_2021|fmt(1, pct=True) }} to {{ n.night_share_2025|fmt(1, pct=True) }}. More fires are still burning in the middle of the night, which is what you would see if farmers now light them after the afternoon pass.</p>
+  </div>
+  {{ figure("fig11_fires", figs, "Afternoon-pass fire detections fall sharply after 2021 while the night-pass share rises from under one percent to several percent.") }}
+  <div class="main col2" style="margin-top:34px">
+    <h3>Each counted fire now carries more smoke</h3>
+    <p>Delhi's weather-adjusted PM2.5 follows upwind fires over one to four days. From 2016 to 2021, 100 units of the fire index went with about {{ n.coupling_early|fmt(1) }}% more PM2.5. In 2025 the same 100 units went with {{ n.coupling_2025|fmt(0) }}% more. If each detected fire now stands for more burning, that is the pattern you would expect.</p>
+  </div>
+  {{ figure("fig12_coupling", figs, "Percent rise in Delhi PM2.5 per 100 fire index units by season, with confidence intervals; 2025 stands well above earlier years.") }}
+  <div class="main col2" style="margin-top:34px">
+    <h3>The ground monitors can't confirm it yet</h3>
+    <p>If burning moved to the evening, monitors inside Punjab and Haryana should see more evening pollution during the harvest. They don't, so far. But the open archive is missing 2023 and 2024, and 2025 had so little burning that a change in its timing would barely move a city monitor. We report this as a test that could not yet be run, not as evidence against the shift.</p>
+  </div>
+  {{ figure("fig13_evening", figs, "Harvest evening ratio relative to December for monitors in Punjab and Haryana by season.") }}
+</section>
+
+<section id="forecast">
+  <div class="rail">D · Forecast</div>
+  <div class="main">
+    <h2>A forecast we can be wrong about</h2>
+    <p>Explaining the past is easy to overdo. So before Diwali 2026 we locked a forecast of the excess for each possible set of firecracker rules, published its checksum, and will score it after 8 November.</p>
+    <p><a href="forecast.html">See the locked forecast</a></p>
+  </div>
+</section>
+
+<section id="more">
+  <div class="rail">More</div>
+  <div class="main">
+    <p>Explore any of the {{ n.n_sites }} monitors in the <a href="explorer.html">city explorer</a>, read how every number is made in <a href="methods.html">data and methods</a>{% if has_pdf %}, or read the <a href="paper/eleven-winters.pdf">full paper</a>{% endif %}.</p>
+  </div>
+</section>
+{% endblock %}

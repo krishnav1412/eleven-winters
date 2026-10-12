@@ -1,0 +1,52 @@
+# Study cities. Stations are matched to a city by distance from its centre.
+# region codes:
+#   delhi_ncr   receptor region for Parts B and C
+#   source      paddy-burning states (Punjab, Haryana, Chandigarh): Part C ground test
+#   igp         rest of the Indo-Gangetic Plain
+#   rest        cities outside the plain, used as contrasts
+# max_stations keeps the download focused on the longest-running monitors.
+# met_proxy: use a neighbouring city's weather (same reanalysis grid area) to save API quota.
+
+cities:
+  - {name: Delhi,            state: Delhi,          region: delhi_ncr, lat: 28.6139, lon: 77.2090, radius_km: 25, max_stations: 20}
+  - {name: Gurugram,         state: Haryana,        region: delhi_ncr, lat: 28.4595, lon: 77.0266, radius_km: 12, max_stations: 3}
+  - {name: Faridabad,        state: Haryana,        region: delhi_ncr, lat: 28.4089, lon: 77.3178, radius_km: 12, max_stations: 3}
+  - {name: Noida,            state: Uttar Pradesh,  region: delhi_ncr, lat: 28.5355, lon: 77.3910, radius_km: 10, max_stations: 3, met_proxy: Delhi}
+  - {name: Ghaziabad,        state: Uttar Pradesh,  region: delhi_ncr, lat: 28.6692, lon: 77.4538, radius_km: 10, max_stations: 3, met_proxy: Delhi}
+
+  - {name: Amritsar,         state: Punjab,         region: source, lat: 31.6340, lon: 74.8723, radius_km: 15, max_stations: 2}
+  - {name: Bathinda,         state: Punjab,         region: source, lat: 30.2110, lon: 74.9455, radius_km: 15, max_stations: 2}
+  - {name: Jalandhar,        state: Punjab,         region: source, lat: 31.3260, lon: 75.5762, radius_km: 15, max_stations: 2}
+  - {name: Ludhiana,         state: Punjab,         region: source, lat: 30.9010, lon: 75.8573, radius_km: 15, max_stations: 2}
+  - {name: Khanna,           state: Punjab,         region: source, lat: 30.7050, lon: 76.2219, radius_km: 6,  max_stations: 1}
+  - {name: Mandi Gobindgarh, state: Punjab,         region: source, lat: 30.6669, lon: 76.3013, radius_km: 6,  max_stations: 1, met_proxy: Khanna}
+  - {name: Patiala,          state: Punjab,         region: source, lat: 30.3398, lon: 76.3869, radius_km: 15, max_stations: 2}
+  - {name: Rupnagar,         state: Punjab,         region: source, lat: 30.9661, lon: 76.5331, radius_km: 15, max_stations: 1}
+  - {name: Chandigarh,       state: Chandigarh,     region: source, lat: 30.7333, lon: 76.7794, radius_km: 10, max_stations: 2}
+  - {name: Ambala,           state: Haryana,        region: source, lat: 30.3782, lon: 76.7767, radius_km: 15, max_stations: 1}
+  - {name: Yamuna Nagar,     state: Haryana,        region: source, lat: 30.1290, lon: 77.2674, radius_km: 15, max_stations: 1}
+  - {name: Kurukshetra,      state: Haryana,        region: source, lat: 29.9695, lon: 76.8783, radius_km: 15, max_stations: 1}
+  - {name: Kaithal,          state: Haryana,        region: source, lat: 29.8015, lon: 76.3998, radius_km: 15, max_stations: 1}
+  - {name: Karnal,           state: Haryana,        region: source, lat: 29.6857, lon: 76.9905, radius_km: 15, max_stations: 1}
+  - {name: Panipat,          state: Haryana,        region: source, lat: 29.3909, lon: 76.9635, radius_km: 15, max_stations: 1}
+  - {name: Jind,             state: Haryana,        region: source, lat: 29.3159, lon: 76.3159, radius_km: 15, max_stations: 1}
+  - {name: Fatehabad,        state: Haryana,        region: source, lat: 29.5152, lon: 75.4548, radius_km: 15, max_stations: 1}
+  - {name: Sirsa,            state: Haryana,        region: source, lat: 29.5321, lon: 75.0318, radius_km: 15, max_stations: 1}
+  - {name: Hisar,            state: Haryana,        region: source, lat: 29.1492, lon: 75.7217, radius_km: 15, max_stations: 1}
+
+  - {name: Agra,             state: Uttar Pradesh,  region: igp, lat: 27.1767, lon: 78.0081, radius_km: 15, max_stations: 3}
+  - {name: Lucknow,          state: Uttar Pradesh,  region: igp, lat: 26.8467, lon: 80.9462, radius_km: 15, max_stations: 4}
+  - {name: Kanpur,           state: Uttar Pradesh,  region: igp, lat: 26.4499, lon: 80.3319, radius_km: 15, max_stations: 3}
+  - {name: Varanasi,         state: Uttar Pradesh,  region: igp, lat: 25.3176, lon: 82.9739, radius_km: 15, max_stations: 3}
+  - {name: Patna,            state: Bihar,          region: igp, lat: 25.5941, lon: 85.1376, radius_km: 15, max_stations: 4}
+  - {name: Kolkata,          state: West Bengal,    region: igp, lat: 22.5726, lon: 88.3639, radius_km: 15, max_stations: 4}
+
+  - {name: Jaipur,           state: Rajasthan,      region: rest, lat: 26.9124, lon: 75.7873, radius_km: 15, max_stations: 3}
+  - {name: Ahmedabad,        state: Gujarat,        region: rest, lat: 23.0225, lon: 72.5714, radius_km: 15, max_stations: 3}
+  - {name: Mumbai,           state: Maharashtra,    region: rest, lat: 19.0760, lon: 72.8777, radius_km: 25, max_stations: 5}
+  - {name: Pune,             state: Maharashtra,    region: rest, lat: 18.5204, lon: 73.8567, radius_km: 15, max_stations: 3}
+  - {name: Hyderabad,        state: Telangana,      region: rest, lat: 17.3850, lon: 78.4867, radius_km: 20, max_stations: 4}
+  - {name: Visakhapatnam,    state: Andhra Pradesh, region: rest, lat: 17.6868, lon: 83.2185, radius_km: 15, max_stations: 2}
+  - {name: Bengaluru,        state: Karnataka,      region: rest, lat: 12.9716, lon: 77.5946, radius_km: 20, max_stations: 4}
+  - {name: Chennai,          state: Tamil Nadu,     region: rest, lat: 13.0827, lon: 80.2707, radius_km: 20, max_stations: 4}
+  - {name: Thiruvananthapuram, state: Kerala,       region: rest, lat: 8.5241,  lon: 76.9366, radius_km: 15, max_stations: 2}

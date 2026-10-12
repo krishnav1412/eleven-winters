@@ -1,0 +1,66 @@
+site,city,season,ei_harvest,ei_reference,ratio,harvest_hours,reference_hours,era
+civilline_ppcb,Jalandhar,2019,1.0715,,,695,569,2016-2021
+civilline_ppcb,Jalandhar,2021,1.4317,,,1042,385,2016-2021
+civilline_ppcb,Jalandhar,2025,1.4437,1.1967,1.2064,1053,639,2022 on
+fblock_hspcb,Sirsa,2019,1.3211,,,661,556,2016-2021
+fblock_hspcb,Sirsa,2021,1.2102,,,1015,377,2016-2021
+fblock_hspcb,Sirsa,2025,1.1363,,,973,560,2022 on
+gobindpura_hspcb,Yamuna Nagar,2019,1.5448,,,670,520,2016-2021
+gobindpura_hspcb,Yamuna Nagar,2021,1.7642,,,984,349,2016-2021
+gobindpura_hspcb,Yamuna Nagar,2025,1.5639,,,852,324,2022 on
+goldentemple_ppcb,Amritsar,2019,1.3133,,,711,555,2016-2021
+goldentemple_ppcb,Amritsar,2021,1.5942,,,1037,398,2016-2021
+goldentemple_ppcb,Amritsar,2025,1.2321,1.1053,1.1148,1034,633,2022 on
+hardevnagar_ppcb,Bathinda,2018,0.8262,,,614,0,2016-2021
+hardevnagar_ppcb,Bathinda,2019,1.5387,,,739,567,2016-2021
+hardevnagar_ppcb,Bathinda,2021,1.2172,,,788,294,2016-2021
+hardevnagar_ppcb,Bathinda,2025,1.3824,,,821,412,2022 on
+hudasector_hspcb,Fatehabad,2019,1.2629,,,695,96,2016-2021
+hudasector_hspcb,Fatehabad,2021,1.1936,,,1061,352,2016-2021
+hudasector_hspcb,Fatehabad,2025,1.2449,1.1095,1.1221,940,640,2022 on
+kalalmajra_ppcb,Khanna,2018,1.3078,,,792,0,2016-2021
+kalalmajra_ppcb,Khanna,2019,1.3259,1.0328,1.2837,719,604,2016-2021
+kalalmajra_ppcb,Khanna,2021,1.3425,,,1100,395,2016-2021
+kalalmajra_ppcb,Khanna,2025,0.982,,,1057,559,2022 on
+modeltown_ppcb,Patiala,2018,1.3766,,,782,0,2016-2021
+modeltown_ppcb,Patiala,2019,1.41,,,747,605,2016-2021
+modeltown_ppcb,Patiala,2021,1.3673,,,1091,399,2016-2021
+modeltown_ppcb,Patiala,2025,1.1087,1.1028,1.0054,1056,612,2022 on
+pattimehar_hspcb,Ambala,2019,1.6996,,,688,559,2016-2021
+pattimehar_hspcb,Ambala,2021,1.5853,,,1030,392,2016-2021
+pattimehar_hspcb,Ambala,2025,1.5758,1.2936,1.2181,953,640,2022 on
+policelines_hspcb,Jind,2019,1.4084,,,700,543,2016-2021
+policelines_hspcb,Jind,2021,1.3081,,,1001,335,2016-2021
+policelines_hspcb,Jind,2025,1.0729,,,992,584,2022 on
+punjabagriculturaluniversity_ppcb,Ludhiana,2019,1.3774,,,778,569,2016-2021
+punjabagriculturaluniversity_ppcb,Ludhiana,2020,1.3479,,,654,397,2016-2021
+punjabagriculturaluniversity_ppcb,Ludhiana,2021,1.4272,,,1038,424,2016-2021
+punjabagriculturaluniversity_ppcb,Ludhiana,2025,1.0967,1.0591,1.0355,986,630,2022 on
+ratanpura,Rupnagar,2019,1.6614,,,710,583,2016-2021
+ratanpura,Rupnagar,2025,1.9963,,,829,421,2022 on
+rimtuniversity_ppcb,Mandi Gobindgarh,2019,1.5218,,,781,499,2016-2021
+rimtuniversity_ppcb,Mandi Gobindgarh,2021,2.051,,,836,362,2016-2021
+rimtuniversity_ppcb,Mandi Gobindgarh,2025,1.3534,,,1050,540,2022 on
+rishinagar_hspcb,Kaithal,2019,1.4452,,,704,550,2016-2021
+rishinagar_hspcb,Kaithal,2021,1.4788,,,1013,377,2016-2021
+rishinagar_hspcb,Kaithal,2025,1.5086,,,947,584,2022 on
+sector12_hspcb,Karnal,2019,1.291,,,648,416,2016-2021
+sector12_hspcb,Karnal,2021,1.524,,,963,378,2016-2021
+sector12_hspcb,Karnal,2025,1.1338,1.0247,1.1065,1005,609,2022 on
+sector18_hspcb,Panipat,2019,1.3194,,,663,534,2016-2021
+sector18_hspcb,Panipat,2021,1.3517,,,1058,381,2016-2021
+sector18_hspcb,Panipat,2025,1.2753,,,816,520,2022 on
+sector25,Chandigarh,2019,1.2389,,,705,485,2016-2021
+sector25,Chandigarh,2021,1.4714,,,1100,396,2016-2021
+sector25,Chandigarh,2025,1.34,1.1887,1.1273,1041,618,2022 on
+sector6_hspcb,Chandigarh,2016,1.3788,,,875,470,2016-2021
+sector6_hspcb,Chandigarh,2017,1.3725,,,751,396,2016-2021
+sector6_hspcb,Chandigarh,2018,1.1527,,,749,0,2016-2021
+sector6_hspcb,Chandigarh,2019,1.1919,1.0775,1.1061,818,630,2016-2021
+sector6_hspcb,Chandigarh,2021,1.371,,,1024,378,2016-2021
+sector6_hspcb,Chandigarh,2025,1.3141,1.1575,1.1353,1001,597,2022 on
+sector7_hspcb,Kurukshetra,2019,1.5205,,,696,494,2016-2021
+sector7_hspcb,Kurukshetra,2021,1.6446,,,1019,348,2016-2021
+sector7_hspcb,Kurukshetra,2025,1.2582,1.1162,1.1271,1034,636,2022 on
+urbanestateii_hspcb,Hisar,2021,1.0807,,,1004,372,2016-2021
+urbanestateii_hspcb,Hisar,2025,1.2963,,,734,392,2022 on

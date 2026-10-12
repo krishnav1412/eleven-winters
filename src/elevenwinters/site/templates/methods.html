@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% from "_figure.html" import figure %}
+{% block title %}Data and Methods · Eleven Winters{% endblock %}
+{% block content %}
+<header class="masthead">
+  <div class="eyebrow">Data and methods</div>
+  <h1 class="page">How every number is made</h1>
+  <p class="dek">Everything here is public data and open code. One command rebuilds every table, figure, this website and the paper.</p>
+</header>
+
+<section>
+  <div class="rail">Sources</div>
+  <div class="main">
+    <h2>Four public datasets</h2>
+    <div class="scroll"><table class="min">
+      <thead><tr><th>Source</th><th>What we use</th><th>Coverage</th></tr></thead>
+      <tbody>
+        <tr><td>CPCB continuous monitors, via the OpenAQ archive</td><td>Hourly PM2.5, PM10, NO₂, SO₂, CO at {{ n.n_sites_cpcb }} sites in {{ n.n_cities }} cities</td><td>Feb 2016 to Sep 2026, with an archive gap from late 2022 to early 2025</td></tr>
+        <tr><td>US Embassy and consulate monitors, via OpenAQ</td><td>Hourly PM2.5 from reference instruments in New Delhi, Mumbai, Kolkata, Hyderabad and Chennai</td><td>2016 to 2026, nearly continuous</td></tr>
+        <tr><td>NASA FIRMS active fires</td><td>VIIRS S-NPP and MODIS detections, with overpass time and fire radiative power</td><td>2016 to 2025</td></tr>
+        <tr><td>ERA5 reanalysis, via Open-Meteo</td><td>Hourly temperature, humidity, wind, rain, pressure, cloud, sunlight and boundary-layer height for each city</td><td>2016 to Sep 2026</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small muted">State boundaries for assigning fires to Punjab and Haryana: geoBoundaries (CC BY 2.5 IN).</p>
+  </div>
+  {{ figure("fig02_coverage", figs, "Heat map of data availability by city and month. CPCB network data are missing from late 2022 to early 2025 in the open archive.") }}
+</section>
+
+<section>
+  <div class="rail">Cleaning</div>
+  <div class="main">
+    <h2>Quality control</h2>
+    <p>Readings from duplicate archive entries of the same physical monitor are merged into one site. Timestamps in the archive mark the end of each hour; we label hours by their start. Of {{ n.pm25_hours|fmt }} site-hours of PM2.5, {{ n.pm25_flagged_share|fmt(1, pct=True) }} were removed:</p>
+    <ul class="plain">
+      <li><b>Invalid:</b> zero, negative, or at the instrument ceiling ({{ n.pm25_flag_invalid|fmt }} hours).</li>
+      <li><b>Stuck sensor:</b> the same value six or more hours running ({{ n.pm25_flag_flatline|fmt }}).</li>
+      <li><b>Stall before failure:</b> a high reading repeated just before the record goes blank, which is how the monitors tend to fail on Diwali nights ({{ n.pm25_flag_stall|fmt }}).</li>
+      <li><b>Isolated spike:</b> one hour far above both neighbours ({{ n.pm25_flag_spike|fmt }}). Multi-hour events such as Diwali are kept.</li>
+      <li><b>Impossible ratio:</b> PM2.5 above PM10 in the same hour ({{ n.pm25_flag_pm_ratio|fmt }}).</li>
+    </ul>
+    <p>Flag counts per site are in <code>results/qc_report.csv</code>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="rail">Weather</div>
+  <div class="main">
+    <h2>Taking the weather out</h2>
+    <p>For each site we fit a gradient-boosted tree model (LightGBM) of log PM2.5 on weather and calendar terms. To normalise, we predict each day 200 times with the weather columns replaced by draws from the site's whole record, keeping the date fixed (Grange et al., 2018). The average is the PM2.5 expected under typical weather.</p>
+    <p>Model skill, from five-fold cross-validation with whole calendar years held out: median R² of {{ n.daily_r2_median|fmt(2) }} on log PM2.5 across {{ n.daily_models }} sites (interquartile range {{ n.daily_r2_q1|fmt(2) }} to {{ n.daily_r2_q3|fmt(2) }}).</p>
+    <h3>The Diwali baseline</h3>
+    <p>For events we use an hourly model that also knows about farm fires, through a wind-aware fire index: VIIRS detections in Punjab and Haryana weighted by how directly upwind of Delhi they are and by distance (300 km e-folding), with lags of up to three days. Diwali windows (three days either side) are never used for training, and every hour is predicted by a model that did not see that week. Diwali-night excess is observed minus baseline, averaged from 6 pm to 3 am. Ordinary nights between October and mid-December are scored the same way to show what normal variation looks like.</p>
+    <h3>Fire coupling</h3>
+    <p>For each season we regress Delhi's daily weather-adjusted log PM2.5 (US Embassy) on the fire index, averaged over the lags with the strongest response, using heteroscedasticity- and autocorrelation-consistent standard errors.</p>
+  </div>
+</section>
+
+<section>
+  <div class="rail">Reproduce</div>
+  <div class="main">
+    <h2>Run it yourself</h2>
+<pre>git clone https://github.com/OWNER/eleven-winters
+cd eleven-winters
+python -m venv .venv &amp;&amp; .venv/Scripts/activate
+pip install -e ".[dev]"
+cp .env.example .env        # add a free OpenAQ key
+ew download                 # stations, archive, fires, weather
+ew all                      # cleaning, models, figures, site</pre>
+    <p class="small muted">Raw data go to the folder named in <code>EW_DATA_DIR</code>, outside the repository. Tests: <code>pytest</code>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="rail">Cite</div>
+  <div class="main">
+    <h2>Citation</h2>
+    <pre>Agarwal, K. (2026). Eleven Winters: separating weather, farm fires and fireworks
+in India's PM2.5, 2016–2026. https://github.com/OWNER/eleven-winters</pre>
+  </div>
+</section>
+{% endblock %}

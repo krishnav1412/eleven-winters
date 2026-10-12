@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% from "_figure.html" import figure %}
+{% block title %}Diwali 2026 Forecast · Eleven Winters{% endblock %}
+{% block content %}
+<header class="masthead">
+  <div class="eyebrow">Pre-registered forecast · Diwali, Sunday 8 November 2026</div>
+  <h1 class="page">We wrote this down before Diwali</h1>
+  <p class="dek">Exploratory studies explain the past. To show the method also works on data it has not seen, we published a forecast for Diwali 2026 before it happened, and we will score it in public afterwards.</p>
+  {% if n.forecast %}
+  <div class="meta">
+    <span>Locked <b>{{ n.forecast.locked_at_utc }}</b></span>
+    <span>SHA-256 <b>{{ n.forecast_sha[:16] }}…</b></span>
+    {% if n.forecast.code_commit %}<span>Code commit <b>{{ n.forecast.code_commit[:10] }}</b></span>{% endif %}
+  </div>
+  {% endif %}
+</header>
+
+{% if n.forecast %}
+<section>
+  <div class="rail">Forecast</div>
+  <div class="main">
+    <h2>One forecast for each set of rules</h2>
+    <p>The firecracker rules for Delhi in 2026 had not been announced when we locked the forecast, so we give one forecast per regime. Each is the average of past Diwalis under the same rules, with an 80% prediction interval.</p>
+    <div class="scroll"><table class="min">
+      <thead><tr><th>Rules in force</th><th class="n">Forecast, µg/m³</th><th class="n">80% interval</th><th>Based on</th></tr></thead>
+      <tbody>
+      {% for key, label in [("full_ban", "Full ban"), ("green_window", "Green crackers, fixed hours"), ("permissive", "No effective restriction")] %}
+        {% set s = n.forecast.scenarios.get(key) %}
+        {% if s %}
+        <tr><td>{{ label }}</td><td class="n">{{ s.point|fmt }}</td><td class="n">{{ s.interval_80[0]|fmt }} to {{ s.interval_80[1]|fmt }}</td><td>{{ s.based_on_years|join(", ") }}</td></tr>
+        {% endif %}
+      {% endfor %}
+      </tbody>
+    </table></div>
+  </div>
+  {{ figure("fig14_forecast", figs, "Forecast intervals for Diwali 2026 by firecracker regime, with past Diwalis shown as points.") }}
+</section>
+
+<section>
+  <div class="rail">Target</div>
+  <div class="main">
+    <h2>Exactly what is being forecast</h2>
+    <p><b>Quantity.</b> {{ n.forecast.target.quantity }}.</p>
+    <p><b>Where.</b> {{ n.forecast.target.site }}.</p>
+    <p><b>Baseline.</b> {{ n.forecast.target.bau_model }}.</p>
+    <p><b>Scoring.</b> {{ n.forecast.scoring }}</p>
+    <p class="small muted">The record is <code>prereg/diwali-2026-forecast.json</code> in the repository. Its SHA-256 checksum is <code style="overflow-wrap:anywhere">{{ n.forecast_sha }}</code>. Any later change to the file would change the checksum.</p>
+  </div>
+</section>
+{% else %}
+<section><div class="rail">Forecast</div><div class="main"><p>The forecast has not been locked yet.</p></div></section>
+{% endif %}
+{% endblock %}

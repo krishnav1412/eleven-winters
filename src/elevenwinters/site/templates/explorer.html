@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}City Explorer · Eleven Winters{% endblock %}
+{% block content %}
+<header class="masthead">
+  <div class="eyebrow">City explorer</div>
+  <h1 class="page">Any monitor, with and without its weather</h1>
+  <p class="dek">Pick one of the {{ n_sites }} monitoring sites in the study. The grey line is PM2.5 as measured. The dark line is what the same site would have recorded under typical weather, so what remains is driven by emissions.</p>
+</header>
+<section>
+  <div class="rail">Site</div>
+  <div class="main">
+    <div class="control">
+      <label for="site-input">Monitoring site</label>
+      <input id="site-input" list="site-list" autocomplete="off" spellcheck="false">
+      <datalist id="site-list"></datalist>
+    </div>
+    <p class="small muted" id="site-status" aria-live="polite">Loading the site list.</p>
+  </div>
+  <div class="wide">
+    <div class="fig-frame"><div class="chart" id="explorer-chart"></div></div>
+    <div class="fig-frame" style="margin-top:14px"><div class="chart" id="explorer-season"></div></div>
+    <p class="small muted" style="margin-top:12px">Both lines are 30-day running means. Weather normalisation: a LightGBM model of daily PM2.5 on ERA5 weather and calendar terms, predicted 200 times with the weather resampled from the site's whole record.</p>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="js/explorer.js"></script>{% endblock %}

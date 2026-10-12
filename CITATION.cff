@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this code or the derived tables, please cite it as below."
+title: "Eleven Winters: separating weather, farm fires and fireworks in India's PM2.5, 2016-2026"
+authors:
+  - family-names: Agarwal
+    given-names: Krishnav
+version: 0.1.0
+date-released: 2026-10-19
+license: MIT
+repository-code: "https://github.com/OWNER/eleven-winters"
+keywords:
+  - air quality
+  - PM2.5
+  - Diwali
+  - crop residue burning
+  - exploratory data analysis
+  - India
