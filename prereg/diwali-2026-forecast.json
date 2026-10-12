@@ -1,0 +1,62 @@
+{
+  "title": "Pre-registered forecast: Delhi Diwali-night PM2.5 excess, 8 November 2026",
+  "locked_at_utc": "2026-10-12T16:56:04Z",
+  "code_commit": "a8c7fc880302e137475b82015e1b8659076746a8",
+  "target": {
+    "site": "CPCB Delhi network median, hours with 3 or more reporting sites (config/stations.csv)",
+    "quantity": "mean hourly (observed - BAU) PM2.5, 18:00 8 Nov to 02:59 9 Nov 2026 IST, missing hours carried forward from the last valid hour",
+    "units": "ug/m3",
+    "bau_model": "LightGBM on ERA5 weather, calendar and wind-aware fire index; Diwali windows excluded from training; out-of-fold prediction by ISO week (src/elevenwinters/analysis/partb.py)"
+  },
+  "scenarios": {
+    "full_ban": {
+      "based_on_years": [
+        2020,
+        2021
+      ],
+      "past_values": [
+        340.0,
+        391.9
+      ],
+      "point": 366.0,
+      "interval_80": [
+        232.6,
+        499.4
+      ]
+    },
+    "green_window": {
+      "based_on_years": [
+        2018,
+        2019,
+        2025
+      ],
+      "past_values": [
+        249.1,
+        273.0,
+        385.7
+      ],
+      "point": 302.6,
+      "interval_80": [
+        176.8,
+        428.4
+      ]
+    },
+    "permissive": {
+      "based_on_years": [
+        2016,
+        2017
+      ],
+      "past_values": [
+        255.5,
+        127.5
+      ],
+      "point": 191.5,
+      "interval_80": [
+        58.1,
+        324.9
+      ]
+    }
+  },
+  "interval_method": "80% prediction interval, mean of past Diwalis under the regime +/- t(4 df) x pooled SD (71.0) x sqrt(1 + 1/n)",
+  "scoring": "After 8 Nov 2026 the same code is rerun with data through 15 Nov 2026. The forecast for the regime actually in force counts as correct if the observed excess falls inside its interval."
+}
