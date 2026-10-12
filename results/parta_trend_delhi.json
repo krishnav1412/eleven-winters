@@ -1,0 +1,31 @@
+{
+  "pre_2020_vs_post_lockdown_pct": -10.559969872987077,
+  "lockdown_months_pct": -14.185505527979387,
+  "post_lockdown_slope_pct_per_year": -0.4853909094419439,
+  "post_lockdown_slope_ci_pct": [
+    -0.946263011861747,
+    -0.0007543690734144765
+  ],
+  "step_mannwhitney_p": 4.257590633140485e-15,
+  "n_pre_months": 40,
+  "n_post_months": 61,
+  "site": "us_delhi",
+  "months": 106,
+  "theil_sen_slope_per_year": -1.3185896566665267,
+  "slope_ci95": [
+    -1.5261470109872153,
+    -1.0859848377163563
+  ],
+  "mean_level": 82.74303690272292,
+  "slope_pct_per_year": -1.5935959157708102,
+  "kendall_tau": -0.5338724168912848,
+  "kendall_p": 5.030486416207616e-16,
+  "change_points": [
+    "2020-01"
+  ],
+  "annual_normalised": {
+    "2016": 89.0,
+    "2020": 79.9,
+    "2025": 76.3
+  }
+}

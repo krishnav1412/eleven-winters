@@ -21,6 +21,7 @@ from elevenwinters.fires import season_summary
 from elevenwinters.panel import load_meteo_hourly, load_site_hourly
 
 SEASON = ("10-10", "11-30")
+SEEDS = [2026, 2027, 2028, 2029, 2030]
 EVENING = range(18, 24)
 MIDDAY = range(10, 16)
 
@@ -37,7 +38,10 @@ def delhi_daily_residual(site: str = US_DELHI) -> pd.DataFrame:
     y = y.loc[X.index]
     train = ~festival_mask(X.index, before=2, after=3)
     weeks = (X.index.isocalendar().year.astype(str) + "-" + X.index.isocalendar().week.astype(str)).to_numpy()
-    pred = models.grouped_oof(X, y, weeks, train, n_folds=5, n_estimators=400)
+    # repeated cross-fitting: average out-of-fold predictions over five random fold assignments,
+    # so results do not hinge on one particular split
+    preds = [models.grouped_oof(X, y, weeks, train, n_folds=5, seed=s, n_estimators=400) for s in SEEDS]
+    pred = np.exp(np.nanmean(np.log(np.vstack(preds)), axis=0))
     out = pd.DataFrame({"observed": y, "predicted": pred}, index=X.index)
     out["resid_log"] = np.log(out["observed"]) - np.log(out["predicted"])
     out["festival"] = ~train
@@ -123,7 +127,8 @@ def evening_shift() -> pd.DataFrame:
 def run() -> None:
     fs = season_summary()
     viirs = fs[fs["product"] == "viirs-snpp"]
-    by_season = viirs.pivot_table(index="season", columns="daynight", values="detections", aggfunc="sum").fillna(0)
+    # shares use detections with fixed heat sources removed, as in Fig. 11; totals use all detections
+    by_season = viirs.pivot_table(index="season", columns="daynight", values="detections_clean", aggfunc="sum").fillna(0)
     by_season["total"] = by_season.sum(axis=1)
     by_season["night_share"] = by_season.get("N", 0) / by_season["total"]
     punjab = viirs[viirs["state"] == "Punjab"].groupby("season")["detections"].sum()
@@ -135,8 +140,10 @@ def run() -> None:
     coup = coupling_by_season(resid, fi, int(best["lag_days"]))
     ev = evening_shift()
 
+    all_det = viirs.groupby("season")["detections"].sum()
     summary = {
-        "viirs_detections_by_season": by_season["total"].astype(int).to_dict(),
+        "viirs_detections_by_season": all_det.astype(int).to_dict(),
+        "viirs_clean_detections_by_season": by_season["total"].astype(int).to_dict(),
         "viirs_night_share_by_season": by_season["night_share"].round(4).to_dict(),
         "viirs_punjab_by_season": punjab.astype(int).to_dict(),
         "best_lag_days": int(best["lag_days"]), "best_lag_rho": float(best["spearman_rho"]),

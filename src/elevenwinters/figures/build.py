@@ -152,45 +152,60 @@ def fig_gap(mode: str):
     long = g.melt(id_vars=["city", "group", "weather_share"], value_vars=["obs_gap", "norm_gap"],
                   var_name="kind", value_name="gap")
     long["kind"] = long["kind"].map({"obs_gap": "Observed", "norm_gap": "Weather removed"})
-    y = alt.Y("city:N", sort=g["city"].tolist(), title=None, axis=alt.Axis(labelColor=p["ink"], labelFont=FONT_LABEL))
-    rule = alt.Chart(g).mark_rule(color=p["faint"], strokeWidth=1.2).encode(y=y, x="norm_gap:Q", x2="obs_gap:Q")
-    pts = alt.Chart(long).mark_point(size=55, strokeWidth=1.6).encode(
-        y=y, x=alt.X("gap:Q", title="Winter (Nov–Jan) minus monsoon (Jul–Sep) PM2.5, µg/m³"),
-        color=alt.Color("kind:N", scale=alt.Scale(domain=["Observed", "Weather removed"], range=[p["muted"], p["ink"]]),
-                        title=None),
-        fill=alt.Color("kind:N", scale=alt.Scale(domain=["Observed", "Weather removed"], range=["transparent", p["ink"]]),
-                       legend=None),
-        tooltip=["city", "kind", alt.Tooltip("gap:Q", format=".0f")])
-    share = alt.Chart(g).mark_text(align="left", dx=8, font=FONT_NUM, fontSize=10, color=p["slate"]).encode(
-        y=y, x="obs_gap:Q", text=alt.Text("weather_share:Q", format=".0%"))
-    return (rule + pts + share).properties(width=W - 120, height=alt.Step(15)).facet(
-        row=alt.Row("group:N", sort=list(names.values()), title=None,
-                    header=alt.Header(labelAngle=0, labelAlign="left", labelAnchor="start", labelOrient="top")),
-    ).resolve_scale(y="independent")
+    xmax = float(max(g["obs_gap"].max(), g["norm_gap"].max()) * 1.12)
+    xmin = float(min(0, g["norm_gap"].min() * 1.1))
+    panels = []
+    groups = [grp for grp in names.values() if grp in set(g["group"])]
+    for i, grp in enumerate(groups):
+        gg, ll = g[g["group"] == grp], long[long["group"] == grp]
+        last = i == len(groups) - 1
+        x = alt.X("gap:Q", title="Winter (Nov–Jan) minus monsoon (Jul–Sep) PM2.5, µg/m³" if last else None,
+                  scale=alt.Scale(domain=[xmin, xmax]), axis=alt.Axis(labels=last, ticks=last, grid=True, gridColor=p["grid"]))
+        y = alt.Y("city:N", sort=gg["city"].tolist(), title=None, axis=alt.Axis(labelColor=p["ink"], labelFont=FONT_LABEL))
+        rule = alt.Chart(gg).mark_rule(color=p["faint"], strokeWidth=1.2).encode(
+            y=y, x=alt.X("norm_gap:Q", scale=alt.Scale(domain=[xmin, xmax])), x2="obs_gap:Q")
+        obs = alt.Chart(ll[ll["kind"] == "Observed"]).mark_point(filled=False, size=58, strokeWidth=1.6, color=p["muted"]).encode(
+            y=y, x=x, tooltip=["city", "kind", alt.Tooltip("gap:Q", format=".0f")])
+        nrm = alt.Chart(ll[ll["kind"] == "Weather removed"]).mark_point(filled=True, size=58, color=p["ink"]).encode(
+            y=y, x=x, tooltip=["city", "kind", alt.Tooltip("gap:Q", format=".0f")])
+        share = alt.Chart(gg).mark_text(align="left", dx=9, font=FONT_NUM, fontSize=10, color=p["slate"]).encode(
+            y=y, x=alt.X("obs_gap:Q", scale=alt.Scale(domain=[xmin, xmax])), text=alt.Text("weather_share:Q", format=".0%"))
+        extra = ({"subtitle": "Filled: weather removed. Open: observed. Number: share of the gap due to weather.",
+                  "subtitleColor": p["muted"], "subtitleFont": FONT_LABEL, "subtitleFontSize": 11} if i == 0 else {})
+        panels.append((rule + obs + nrm + share).properties(
+            width=W - 120, height=alt.Step(16),
+            title=alt.TitleParams(grp, fontSize=12, fontWeight=600, color=p["ink"], anchor="start", **extra)))
+    return alt.vconcat(*panels, spacing=14)
 
 
 def fig_trend(mode: str):
     """Fig 5. Delhi (US Embassy) monthly PM2.5, observed and weather-normalised, with change points."""
     p = pal(mode)
-    m = pd.read_csv(config.results_dir() / "delhi_monthly_normalised.csv", parse_dates=["date"])
+    m = pd.read_csv(config.results_dir() / "delhi_monthly_normalised.csv", parse_dates=["date"]).set_index("date")
+    m = m.reindex(pd.date_range(m.index.min(), m.index.max(), freq="MS")).rename_axis("date").reset_index()
     tr = load_json("parta_trend_delhi.json")
     long = m.melt(id_vars="date", value_vars=["observed", "normalised"], var_name="kind", value_name="pm25")
     long["kind"] = long["kind"].map({"observed": "Observed", "normalised": "Weather removed"})
+    last = long.dropna().sort_values("date").groupby("kind").tail(1)
     lock = alt.Chart(pd.DataFrame({"a": ["2020-03-25"], "b": ["2020-05-31"]})).mark_rect(color=p["band"]).encode(x="a:T", x2="b:T")
     lock_t = alt.Chart(pd.DataFrame({"a": ["2020-03-25"], "t": ["2020 lockdown"]})).mark_text(
         align="left", dx=3, dy=6, baseline="top", color=p["muted"], fontSize=10.5).encode(x="a:T", y=alt.value(0), text="t")
-    line = alt.Chart(long).mark_line().encode(
+    line = alt.Chart(long).mark_line(invalid="break-paths-show-domains").encode(
         x=alt.X("date:T", title=None, axis=alt.Axis(format="%Y", tickCount="year")),
         y=alt.Y("pm25:Q", title="Monthly mean PM2.5, µg/m³"),
-        color=alt.Color("kind:N", scale=alt.Scale(domain=["Observed", "Weather removed"], range=[p["faint"], p["ink"]]), title=None),
+        color=alt.Color("kind:N", scale=alt.Scale(domain=["Observed", "Weather removed"], range=[p["faint"], p["ink"]]), legend=None),
         strokeDash=alt.StrokeDash("kind:N", scale=alt.Scale(domain=["Observed", "Weather removed"], range=[[3, 2], [1, 0]]), legend=None),
         strokeWidth=alt.StrokeWidth("kind:N", scale=alt.Scale(domain=["Observed", "Weather removed"], range=[1.2, 2.2]), legend=None),
+        tooltip=[alt.Tooltip("date:T", format="%b %Y"), "kind", alt.Tooltip("pm25:Q", format=".0f")],
     )
-    layers = [lock, lock_t, line]
+    labels = alt.Chart(last).mark_text(align="left", dx=6, fontSize=11).encode(
+        x="date:T", y="pm25:Q", text="kind:N",
+        color=alt.Color("kind:N", scale=alt.Scale(domain=["Observed", "Weather removed"], range=[p["muted"], p["ink"]]), legend=None))
+    layers = [lock, lock_t, line, labels]
     if tr.get("change_points"):
         cp = pd.DataFrame({"date": pd.to_datetime([c + "-01" for c in tr["change_points"]])})
         layers.append(alt.Chart(cp).mark_rule(color=p["slate"], strokeDash=[4, 3], strokeWidth=1.2).encode(x="date:T"))
-    return alt.layer(*layers).properties(width=W, height=250)
+    return alt.layer(*layers).properties(width=W - 70, height=250)
 
 
 def fig_event(mode: str):

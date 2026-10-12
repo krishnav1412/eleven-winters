@@ -6,6 +6,9 @@ body {
   line-height: 1.5; color: #1B1F1D; max-width: none; margin: 0; padding: 0; background: #fff;
   hyphens: auto; text-align: justify;
 }
+@media screen {
+  body { max-width: 780px; margin: 48px auto; padding: 0 20px; font-size: 1.12rem; }
+}
 header#title-block-header { text-align: left; margin-bottom: 1.6em; border-bottom: 1px solid #CBD1CB; padding-bottom: 1.2em; }
 h1.title {
   font-family: "Archivo", "Arial Narrow", Arial, sans-serif; font-stretch: 80%; font-weight: 750;

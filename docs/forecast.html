@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diwali 2026 Forecast · Eleven Winters</title>
+<meta name="description" content="Separating weather, farm fires and fireworks in India's PM2.5, 2016–2026. An open, reproducible exploratory study.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FCFCFA'/%3E%3Ccircle cx='10' cy='16' r='5' fill='%23A3A69F'/%3E%3Ccircle cx='22' cy='16' r='5' fill='%231F211D'/%3E%3C/svg%3E">
+</head>
+<body data-root="">
+<div class="frame">
+  <header class="bar">
+    <a class="home" href="index.html">Eleven Winters</a>
+    <nav aria-label="Pages">
+      <a href="index.html" >Findings</a>
+      <a href="explorer.html" >City explorer</a>
+      <a href="forecast.html" aria-current="page">Diwali 2026 forecast</a>
+      <a href="methods.html" >Data and methods</a>
+      <a href="paper/eleven-winters.pdf">Paper (PDF)</a>
+    </nav>
+  </header>
+  
+<header class="masthead">
+  <div class="eyebrow">Pre-registered forecast · Diwali, Sunday 8 November 2026</div>
+  <h1 class="page">We wrote this down before Diwali</h1>
+  <p class="dek">Exploratory studies explain the past. To show the method also works on data it has not seen, we published a forecast for Diwali 2026 before it happened, and we will score it in public afterwards.</p>
+  
+  <div class="meta">
+    <span>Locked <b>2026-10-12T16:56:04Z</b></span>
+    <span>SHA-256 <b>0b5f3a06349b1dd1…</b></span>
+    <span>Code commit <b>a8c7fc8803</b></span>
+  </div>
+  
+</header>
+
+
+<section>
+  <div class="rail">Forecast</div>
+  <div class="main">
+    <h2>One forecast for each set of rules</h2>
+    <p>The firecracker rules for Delhi in 2026 had not been announced when we locked the forecast, so we give one forecast per regime. Each is the average of past Diwalis under the same rules, with an 80% prediction interval.</p>
+    <div class="scroll"><table class="min">
+      <thead><tr><th>Rules in force</th><th class="n">Forecast, µg/m³</th><th class="n">80% interval</th><th>Based on</th></tr></thead>
+      <tbody>
+      
+        
+        
+        <tr><td>Full ban</td><td class="n">366</td><td class="n">233 to 499</td><td>2020, 2021</td></tr>
+        
+      
+        
+        
+        <tr><td>Green crackers, fixed hours</td><td class="n">303</td><td class="n">177 to 428</td><td>2018, 2019, 2025</td></tr>
+        
+      
+        
+        
+        <tr><td>No effective restriction</td><td class="n">192</td><td class="n">58 to 325</td><td>2016, 2017</td></tr>
+        
+      
+      </tbody>
+    </table></div>
+  </div>
+  
+<figure class="wide" id="fig14_forecast">
+  <div class="fig-head"><h3>Our locked forecast for Diwali 2026</h3></div>
+  <div class="fig-frame"><div class="chart" data-fig="fig14_forecast" role="img" aria-label="Our locked forecast for Diwali 2026"></div></div>
+  <p class="sr-summary">Forecast intervals for Diwali 2026 by firecracker regime, with past Diwalis shown as points.</p>
+  <figcaption>Forecast Diwali-night excess PM2.5 for 8 November 2026 under each possible firecracker regime, with 80% prediction intervals. Open circles are past Diwalis under the same rules.<span class="src">Source: This study, prereg/diwali-2026-forecast.json.</span></figcaption>
+</figure>
+</section>
+
+<section>
+  <div class="rail">Target</div>
+  <div class="main">
+    <h2>Exactly what is being forecast</h2>
+    <p><b>Quantity.</b> mean hourly (observed - BAU) PM2.5, 18:00 8 Nov to 02:59 9 Nov 2026 IST, missing hours carried forward from the last valid hour.</p>
+    <p><b>Where.</b> CPCB Delhi network median, hours with 3 or more reporting sites (config/stations.csv).</p>
+    <p><b>Baseline.</b> LightGBM on ERA5 weather, calendar and wind-aware fire index; Diwali windows excluded from training; out-of-fold prediction by ISO week (src/elevenwinters/analysis/partb.py).</p>
+    <p><b>Scoring.</b> After 8 Nov 2026 the same code is rerun with data through 15 Nov 2026. The forecast for the regime actually in force counts as correct if the observed excess falls inside its interval.</p>
+    <p class="small muted">The record is <code>prereg/diwali-2026-forecast.json</code> in the repository. Its SHA-256 checksum is <code style="overflow-wrap:anywhere">0b5f3a06349b1dd1311300029ef3446796338ac83adc0a3b78a3412ef0120a4f</code>. Any later change to the file would change the checksum.</p>
+  </div>
+</section>
+
+
+  <footer>
+    <span>Krishnav Agarwal · 2026 · Code MIT, derived data CC BY 4.0</span>
+    <span>Data: CPCB and US mission monitors via OpenAQ · NASA FIRMS · ERA5 via Open-Meteo</span>
+  </footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vega@6.4.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@7.2.0"></script>
+<script src="js/charts.js"></script>
+
+</body>
+</html>

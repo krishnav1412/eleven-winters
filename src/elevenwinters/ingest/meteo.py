@@ -48,7 +48,12 @@ def fetch_city(city: dict, start: str, end: str) -> pd.DataFrame:
         "wind_speed_unit": "ms",
     }
     for attempt in range(6):
-        r = requests.get(cfg["api"], params=params, timeout=300)
+        try:
+            r = requests.get(cfg["api"], params=params, timeout=300)
+        except requests.RequestException as exc:
+            print(f"    network error ({exc}); retrying", flush=True)
+            time.sleep(30 * (attempt + 1))
+            continue
         if r.status_code == 429:
             reason = r.text[:200]
             if "Daily" in reason or "daily" in reason:
@@ -60,7 +65,12 @@ def fetch_city(city: dict, start: str, end: str) -> pd.DataFrame:
             time.sleep(30 * (attempt + 1))
             continue
         r.raise_for_status()
-        hourly = r.json()["hourly"]
+        try:
+            hourly = r.json()["hourly"]
+        except (ValueError, KeyError):
+            print(f"    unreadable response ({len(r.content)} bytes); retrying", flush=True)
+            time.sleep(30 * (attempt + 1))
+            continue
         df = pd.DataFrame(hourly)
         df["time"] = pd.to_datetime(df["time"])
         return df.rename(columns={"time": "datetime"})

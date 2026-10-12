@@ -115,12 +115,15 @@ def grouped_oof(X: pd.DataFrame, y: pd.Series, groups: np.ndarray, train_mask: n
     time are held out together."""
     rng = np.random.default_rng(seed)
     uniq = np.unique(groups)
+    # random fold per group; this is the assignment the locked Diwali 2026 forecast was built with
     fold_of = dict(zip(uniq, rng.integers(0, n_folds, len(uniq))))
     folds = np.array([fold_of[g] for g in groups])
     pred = np.full(len(X), np.nan)
     for k in range(n_folds):
         tr = (folds != k) & train_mask
         te = folds == k
+        if te.sum() == 0 or tr.sum() < 50:
+            continue
         model, smear = fit(X[tr], y[tr], **overrides)
         pred[te] = predict(model, smear, X[te])
     return pred
