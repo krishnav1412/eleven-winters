@@ -58,7 +58,7 @@
   {{ figure("fig06_event", figs, "Hour by hour PM2.5 above the baseline around Diwali night, one line per year, coloured by the firecracker rules.") }}
   <div class="main col2" style="margin-top:34px">
     <h3>The rules made no visible difference</h3>
-    <p>Mean Diwali-night excess was {{ n.diwali_permissive_mean|fmt }} µg/m³ in years with no effective restriction, {{ n.diwali_green_window_mean|fmt }} with green crackers and {{ n.diwali_full_ban_mean|fmt }} under a full ban. There are only a few Diwalis per regime, so this is not proof that bans cannot work, but it gives no sign that these did.</p>
+    <p>Mean Diwali-night excess was {{ n.diwali_permissive_mean|fmt }} µg/m³ in the two years without a bursting restriction, {{ n.diwali_green_window_mean|fmt }} with green crackers and {{ n.diwali_full_ban_mean|fmt }} under a full ban. The two largest nights in the record came in 2021, under a full ban, and 2025, when green crackers were allowed again. The smallest came in 2017, when sales were suspended weeks before an early Diwali. There are only a few Diwalis per regime, so this is not proof that bans cannot work, but it gives no sign that these did.</p>
   </div>
   {{ figure("fig07_nights", figs, "Diwali night excess PM2.5 for each year from 2016 to 2025, against the range of ordinary autumn nights.") }}
   <div class="main col2" style="margin-top:34px">
@@ -68,7 +68,8 @@
   {{ figure("fig08_censoring", figs, "Share of hours missing at the US Embassy monitor from 5 pm to 6 am, Diwali nights against ordinary nights.") }}
   <div class="main col2" style="margin-top:34px">
     <h3>A fingerprint of fireworks</h3>
-    <p>On Diwali evening, compared with the same hours a week earlier, the air gets finer and more sulphurous: the PM2.5 to PM10 ratio and SO₂ both rise, while NO₂, mostly from traffic, does not follow. The timing also differs between cities. In Delhi the excess builds into the night. In Chennai, where Deepavali is celebrated at dawn, part of it comes in the morning.</p>
+    <p>Compared with the same hours a week earlier, Diwali evening air is finer and more sulphurous. The PM2.5 to PM10 ratio rises from {{ n.fp.ratio.median_ref|fmt(2) }} to {{ n.fp.ratio.median_diwali|fmt(2) }}, and SO₂ rises by {{ n.fp.so2.median_pct_change|fmt(0) }}%. The traffic gases go the other way: NO₂ and CO both fall slightly, as fewer people drive. Fine particles and sulphur up, traffic down: that is fireworks.</p>
+    <p>The timing follows local custom. Delhi peaks around midnight. Mumbai and Hyderabad peak between 8 and 11 pm. Chennai peaks on the evening before, when Tamil Nadu celebrates Deepavali.</p>
   </div>
   {{ figure("fig10_fingerprint", figs, "Paired comparison of Diwali evening against reference evenings for PM2.5 to PM10 ratio, sulphur dioxide, carbon monoxide and nitrogen dioxide.") }}
   {{ figure("fig09_cities", figs, "Median excess PM2.5 by hour around Diwali in Delhi, Kolkata, Mumbai, Hyderabad and Chennai.") }}
