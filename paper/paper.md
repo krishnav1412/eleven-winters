@@ -1,6 +1,6 @@
 ---
 title: "Eleven winters, ten Diwalis: separating weather, farm fires and fireworks in India's PM2.5, 2016–2026"
-author: "Krishnav Agarwal · Independent researcher"
+author: "Krishnav Agarwal · School of Computer Science, Vellore Institute of Technology (VIT), Vellore, India · agarwalkrishnav34@gmail.com"
 date: "Preprint · 13 October 2026 · https://github.com/krishnav1412/eleven-winters"
 keywords: [PM2.5, Diwali, crop residue burning, weather normalisation, VIIRS, data censoring, exploratory data analysis, India]
 bibliography: refs.bib
