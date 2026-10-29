@@ -1,0 +1,694 @@
+{
+ "m2_locations": 132,
+ "m2_sites": 105,
+ "m2_sites_with_duplicates": 23,
+ "m2_raw_pm25_rows": 7643714,
+ "m2_duplicate_site_hours": 0,
+ "m2_us_minus999": 6542,
+ "m2_us_ge999": 446,
+ "m2_qc_flags": {
+  "invalid": 74646,
+  "flatline": 18291,
+  "stall": 1305,
+  "spike": 477,
+  "pm_ratio": 34823
+ },
+ "m2_naqi_by_region": {
+  "Delhi-NCR": {
+   "Good": 0.142,
+   "Satisfactory": 0.288,
+   "Moderate": 0.176,
+   "Poor": 0.119,
+   "Very poor": 0.223,
+   "Severe": 0.053
+  },
+  "Outside the plain": {
+   "Good": 0.462,
+   "Satisfactory": 0.353,
+   "Moderate": 0.145,
+   "Poor": 0.03,
+   "Very poor": 0.01,
+   "Severe": 0.0
+  },
+  "Punjab and Haryana": {
+   "Good": 0.258,
+   "Satisfactory": 0.401,
+   "Moderate": 0.202,
+   "Poor": 0.08,
+   "Very poor": 0.055,
+   "Severe": 0.003
+  },
+  "Rest of Gangetic Plain": {
+   "Good": 0.278,
+   "Satisfactory": 0.337,
+   "Moderate": 0.166,
+   "Poor": 0.093,
+   "Very poor": 0.108,
+   "Severe": 0.018
+  }
+ },
+ "m2_equal_width_edges": [
+  0.2,
+  151.3,
+  302.4,
+  453.5,
+  604.7,
+  755.8
+ ],
+ "m2_equal_freq_edges": [
+  0.2,
+  24.1,
+  37.1,
+  54.2,
+  82.8,
+  755.8
+ ],
+ "m2_us_daily_missing_share": 0.207,
+ "m2_impute_rmse_mcar": {
+  "Deletion (mean of the rest)": 82.0,
+  "Mean imputation": 82.0,
+  "Median imputation": 86.5,
+  "Last value carried forward": 48.7,
+  "Linear interpolation": 34.8
+ },
+ "m2_impute_rmse_mnar": {
+  "Deletion (mean of the rest)": 213.7,
+  "Mean imputation": 213.7,
+  "Median imputation": 228.5,
+  "Last value carried forward": 130.3,
+  "Linear interpolation": 129.4
+ },
+ "m2_em": {
+  "rmse_em": 32.5,
+  "rmse_mean": 82.3,
+  "n_masked": 302,
+  "mu": [
+   4.326,
+   5.149,
+   3.898
+  ],
+  "corr_pm25_pm10": 0.93
+ },
+ "m3_univariate": {
+  "n": 3084,
+  "mean": 102.3,
+  "median": 74.4,
+  "sd": 82.5,
+  "skew": 1.52,
+  "kurtosis": 2.77,
+  "skew_log": -0.03
+ },
+ "m3_bivariate": {
+  "Temperature": {
+   "pearson": -0.58,
+   "spearman": -0.58
+  },
+  "Humidity": {
+   "pearson": -0.05,
+   "spearman": -0.26
+  },
+  "Wind speed": {
+   "pearson": -0.2,
+   "spearman": -0.16
+  },
+  "Mixing height": {
+   "pearson": -0.38,
+   "spearman": -0.44
+  },
+  "Rain": {
+   "pearson": -0.26,
+   "spearman": -0.62
+  },
+  "PM10": {
+   "pearson": 0.92,
+   "spearman": 0.94
+  }
+ },
+ "m3_partial_pm25_blh_given_t": -0.038,
+ "m3_indexing_nov2020_mean": 205.2,
+ "m3_indexing_diwali2024_peak": 385.0,
+ "m3_by_month": {
+  "1": 188.8,
+  "2": 116.7,
+  "3": 72.6,
+  "4": 72.3,
+  "5": 67.2,
+  "6": 49.3,
+  "7": 34.3,
+  "8": 28.6,
+  "9": 38.0,
+  "10": 105.6,
+  "11": 214.2,
+  "12": 202.9
+ },
+ "m3_by_hour_min_max": {
+  "min_hour": 16,
+  "min": 69.3,
+  "max_hour": 8,
+  "max": 122.0
+ },
+ "m3_stl_seasonal_amplitude": 247.7,
+ "m3_stl_trend_start_end": [
+  120.5,
+  101.5
+ ],
+ "m3_acf_daily": {
+  "1": 0.9,
+  "7": 0.68,
+  "30": 0.5,
+  "182": -0.35,
+  "365": 0.64
+ },
+ "m4_summary_top5": [
+  {
+   "city": "Delhi",
+   "days": 2017,
+   "mean": 101.0,
+   "median": 74.4000015258789,
+   "sd": 83.0999984741211,
+   "iqr": 93.2,
+   "p95": 258.1
+  },
+  {
+   "city": "Gurugram",
+   "days": 1695,
+   "mean": 100.4000015258789,
+   "median": 85.19999694824219,
+   "sd": 72.4000015258789,
+   "iqr": 89.9,
+   "p95": 231.2
+  },
+  {
+   "city": "Ghaziabad",
+   "days": 1251,
+   "mean": 95.9000015258789,
+   "median": 63.79999923706055,
+   "sd": 84.69999694824219,
+   "iqr": 91.8,
+   "p95": 279.8
+  },
+  {
+   "city": "Noida",
+   "days": 1238,
+   "mean": 93.69999694824219,
+   "median": 61.599998474121094,
+   "sd": 84.69999694824219,
+   "iqr": 85.0,
+   "p95": 281.2
+  },
+  {
+   "city": "Jind",
+   "days": 662,
+   "mean": 84.0999984741211,
+   "median": 70.4000015258789,
+   "sd": 58.0,
+   "iqr": 56.5,
+   "p95": 190.0
+  }
+ ],
+ "m4_summary_bottom3": [
+  {
+   "city": "Bathinda",
+   "days": 821,
+   "mean": 34.400001525878906,
+   "median": 28.0,
+   "sd": 25.600000381469727,
+   "iqr": 31.0,
+   "p95": 81.6
+  },
+  {
+   "city": "Bengaluru",
+   "days": 1220,
+   "mean": 27.0,
+   "median": 23.5,
+   "sd": 14.100000381469727,
+   "iqr": 20.0,
+   "p95": 54.0
+  },
+  {
+   "city": "Thiruvananthapuram",
+   "days": 1111,
+   "mean": 23.700000762939453,
+   "median": 20.299999237060547,
+   "sd": 12.899999618530273,
+   "iqr": 12.1,
+   "p95": 51.8
+  }
+ ],
+ "m4_pm25_vs_pm10": {
+  "slope": 0.493,
+  "intercept": -3.6,
+  "r": 0.89,
+  "n": 37183
+ },
+ "m4_contingency": {
+  "table": {
+   "Winter": {
+    "Good": 0,
+    "Satisfactory": 8,
+    "Moderate": 48,
+    "Poor": 88,
+    "Very poor": 256,
+    "Severe": 53
+   },
+   "Summer": {
+    "Good": 27,
+    "Satisfactory": 158,
+    "Moderate": 183,
+    "Poor": 90,
+    "Very poor": 47,
+    "Severe": 0
+   },
+   "Monsoon": {
+    "Good": 208,
+    "Satisfactory": 386,
+    "Moderate": 87,
+    "Poor": 8,
+    "Very poor": 0,
+    "Severe": 0
+   },
+   "Post-monsoon": {
+    "Good": 9,
+    "Satisfactory": 21,
+    "Moderate": 46,
+    "Poor": 66,
+    "Very poor": 162,
+    "Severe": 66
+   }
+  },
+  "chi2": 1562.9,
+  "dof": 15,
+  "p": 0.0,
+  "cramers_v": 0.508
+ },
+ "m4_nd_winter": {
+  "Delhi-NCR": {
+   "pm25": 158.89999389648438,
+   "pm10": 273.6000061035156,
+   "no2": 60.79999923706055
+  },
+  "Outside the plain": {
+   "pm25": 59.599998474121094,
+   "pm10": 120.80000305175781,
+   "no2": 44.099998474121094
+  },
+  "Punjab and Haryana": {
+   "pm25": 69.0,
+   "pm10": 134.8000030517578,
+   "no2": 28.899999618530273
+  },
+  "Rest of Gangetic Plain": {
+   "pm25": 111.30000305175781,
+   "pm10": 165.0,
+   "no2": 45.599998474121094
+  }
+ },
+ "m5_n_cities": 39,
+ "m5_mst_sizes": [
+  37,
+  1,
+  1
+ ],
+ "m5_bic": {
+  "1": 1416.1,
+  "2": 1283.7,
+  "3": 1272.3,
+  "4": 1303.7,
+  "5": 1219.8
+ },
+ "m5_bic_best_k": 5,
+ "m5_agreement_ari": {
+  "hierarchical_vs_spectral": 0.75,
+  "hierarchical_vs_mst": -0.04,
+  "hierarchical_vs_gmm": 0.79,
+  "hierarchical_vs_region": 0.67
+ },
+ "m5_hier_groups": {
+  "1": [
+   "Ambala",
+   "Amritsar",
+   "Bathinda",
+   "Chandigarh",
+   "Chennai",
+   "Fatehabad",
+   "Hisar",
+   "Jaipur",
+   "Jalandhar",
+   "Jind",
+   "Kaithal",
+   "Karnal",
+   "Khanna",
+   "Kurukshetra",
+   "Ludhiana",
+   "Mandi Gobindgarh",
+   "Panipat",
+   "Patiala",
+   "Rupnagar",
+   "Sirsa",
+   "Yamuna Nagar"
+  ],
+  "2": [
+   "Ahmedabad",
+   "Bengaluru",
+   "Hyderabad",
+   "Pune",
+   "Thiruvananthapuram"
+  ],
+  "3": [
+   "Agra",
+   "Delhi",
+   "Faridabad",
+   "Ghaziabad",
+   "Gurugram",
+   "Kanpur",
+   "Kolkata",
+   "Lucknow",
+   "Mumbai",
+   "Noida",
+   "Patna",
+   "Varanasi",
+   "Visakhapatnam"
+  ]
+ },
+ "m5_group_amplitude": {
+  "1": 1.26,
+  "2": 1.08,
+  "3": 1.65
+ },
+ "m5_outliers": {
+  "n_days": 1638,
+  "n_outliers": 17,
+  "n_near_diwali": 1,
+  "diwali_days_available": 6,
+  "examples": [
+   "2016-03-13",
+   "2017-10-20",
+   "2018-01-26",
+   "2018-04-18",
+   "2018-04-19",
+   "2018-04-28",
+   "2018-04-30",
+   "2019-06-24",
+   "2019-07-07",
+   "2019-07-11",
+   "2019-07-13",
+   "2019-08-17"
+  ]
+ },
+ "m6_pca_explained": [
+  0.354,
+  0.284,
+  0.181,
+  0.071,
+  0.049,
+  0.019,
+  0.016,
+  0.013,
+  0.01,
+  0.003
+ ],
+ "m6_intrinsic_dim_90": 5,
+ "m6_intrinsic_dim_kaiser": 3,
+ "m6_pca_loadings": {
+  "PM2.5": {
+   "PC1": 0.49,
+   "PC2": -0.17,
+   "PC3": 0.05
+  },
+  "PM10": {
+   "PC1": 0.5,
+   "PC2": -0.05,
+   "PC3": 0.15
+  },
+  "NO\u2082": {
+   "PC1": 0.44,
+   "PC2": 0.18,
+   "PC3": -0.24
+  },
+  "SO\u2082": {
+   "PC1": 0.21,
+   "PC2": 0.43,
+   "PC3": -0.33
+  },
+  "CO": {
+   "PC1": 0.08,
+   "PC2": -0.44,
+   "PC3": 0.39
+  },
+  "Temperature": {
+   "PC1": -0.26,
+   "PC2": 0.4,
+   "PC3": 0.17
+  },
+  "Humidity": {
+   "PC1": -0.21,
+   "PC2": -0.4,
+   "PC3": -0.4
+  },
+  "Wind": {
+   "PC1": -0.16,
+   "PC2": -0.06,
+   "PC3": 0.51
+  },
+  "Mixing height": {
+   "PC1": -0.09,
+   "PC2": 0.48,
+   "PC3": 0.33
+  },
+  "Rain": {
+   "PC1": -0.36,
+   "PC2": -0.07,
+   "PC3": -0.31
+  }
+ },
+ "m6_svd_matches_pca": true,
+ "m6_svd_singular_values": [
+  76.2,
+  68.2,
+  54.4,
+  34.1,
+  28.3
+ ],
+ "m6_factor_loadings": {
+  "PM2.5": {
+   "Factor 1": -0.97,
+   "Factor 2": -0.18
+  },
+  "PM10": {
+   "Factor 1": -0.97,
+   "Factor 2": 0.07
+  },
+  "NO\u2082": {
+   "Factor 1": -0.68,
+   "Factor 2": 0.16
+  },
+  "SO\u2082": {
+   "Factor 1": -0.2,
+   "Factor 2": 0.41
+  },
+  "CO": {
+   "Factor 1": -0.34,
+   "Factor 2": -0.36
+  },
+  "Temperature": {
+   "Factor 1": 0.48,
+   "Factor 2": 0.66
+  },
+  "Humidity": {
+   "Factor 1": 0.36,
+   "Factor 2": -0.84
+  },
+  "Wind": {
+   "Factor 1": 0.17,
+   "Factor 2": 0.15
+  },
+  "Mixing height": {
+   "Factor 1": 0.17,
+   "Factor 2": 0.87
+  },
+  "Rain": {
+   "Factor 1": 0.61,
+   "Factor 2": -0.29
+  }
+ },
+ "m6_mds_stress": 13.785,
+ "m6_som_units": {
+  "Agra": [
+   2,
+   3
+  ],
+  "Ahmedabad": [
+   0,
+   2
+  ],
+  "Ambala": [
+   1,
+   0
+  ],
+  "Amritsar": [
+   0,
+   0
+  ],
+  "Bathinda": [
+   2,
+   1
+  ],
+  "Bengaluru": [
+   0,
+   2
+  ],
+  "Chandigarh": [
+   1,
+   2
+  ],
+  "Chennai": [
+   0,
+   2
+  ],
+  "Delhi": [
+   3,
+   3
+  ],
+  "Faridabad": [
+   3,
+   3
+  ],
+  "Fatehabad": [
+   3,
+   0
+  ],
+  "Ghaziabad": [
+   3,
+   3
+  ],
+  "Gurugram": [
+   2,
+   1
+  ],
+  "Hisar": [
+   3,
+   0
+  ],
+  "Hyderabad": [
+   1,
+   3
+  ],
+  "Jaipur": [
+   1,
+   1
+  ],
+  "Jalandhar": [
+   1,
+   0
+  ],
+  "Jind": [
+   3,
+   0
+  ],
+  "Kaithal": [
+   3,
+   0
+  ],
+  "Kanpur": [
+   2,
+   3
+  ],
+  "Karnal": [
+   1,
+   0
+  ],
+  "Khanna": [
+   1,
+   0
+  ],
+  "Kolkata": [
+   2,
+   3
+  ],
+  "Kurukshetra": [
+   2,
+   0
+  ],
+  "Lucknow": [
+   2,
+   2
+  ],
+  "Ludhiana": [
+   0,
+   0
+  ],
+  "Mandi Gobindgarh": [
+   0,
+   1
+  ],
+  "Mumbai": [
+   1,
+   3
+  ],
+  "Noida": [
+   3,
+   3
+  ],
+  "Panipat": [
+   1,
+   0
+  ],
+  "Patiala": [
+   3,
+   1
+  ],
+  "Patna": [
+   3,
+   2
+  ],
+  "Pune": [
+   1,
+   3
+  ],
+  "Rupnagar": [
+   0,
+   0
+  ],
+  "Sirsa": [
+   0,
+   0
+  ],
+  "Thiruvananthapuram": [
+   0,
+   3
+  ],
+  "Varanasi": [
+   3,
+   3
+  ],
+  "Visakhapatnam": [
+   0,
+   3
+  ],
+  "Yamuna Nagar": [
+   0,
+   1
+  ]
+ },
+ "m7_linear": {
+  "n_train": 1980,
+  "n_test": 1002,
+  "r2_log_test": 0.782,
+  "r2_log_train": 0.786,
+  "rmse": 45.8,
+  "mae": 28.8,
+  "coef_blh_mean_per_100m_pct": 3.1,
+  "coef_ws_per_ms_pct": -10.4
+ },
+ "m7_lightgbm": {
+  "r2_log_test": 0.802,
+  "rmse": 42.9,
+  "mae": 25.7
+ },
+ "m7_accuracy": {
+  "linear_exact": 0.52,
+  "linear_within_one": 0.946,
+  "lightgbm_exact": 0.566,
+  "majority_baseline": 0.291
+ }
+}

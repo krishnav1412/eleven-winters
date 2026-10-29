@@ -1,0 +1,17 @@
+region,season,pm25,pm10,no2
+Delhi-NCR,Monsoon,41.7,110.8,36.2
+Delhi-NCR,Post-monsoon,158.5,295.7,67.4
+Delhi-NCR,Summer,72.6,193.8,52.0
+Delhi-NCR,Winter,158.9,273.6,60.8
+Outside the plain,Monsoon,25.5,61.0,31.8
+Outside the plain,Post-monsoon,47.7,99.0,37.2
+Outside the plain,Summer,37.0,88.5,36.2
+Outside the plain,Winter,59.6,120.8,44.1
+Punjab and Haryana,Monsoon,36.7,83.3,25.7
+Punjab and Haryana,Post-monsoon,82.3,165.6,29.7
+Punjab and Haryana,Summer,47.9,110.6,29.4
+Punjab and Haryana,Winter,69.0,134.8,28.9
+Rest of Gangetic Plain,Monsoon,31.5,64.0,28.3
+Rest of Gangetic Plain,Post-monsoon,102.0,156.4,42.9
+Rest of Gangetic Plain,Summer,52.8,113.9,34.7
+Rest of Gangetic Plain,Winter,111.3,165.0,45.6
